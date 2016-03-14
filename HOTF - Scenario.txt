@@ -1,0 +1,22 @@
+6050:
+- ledjes zijn verlichting
+	- led 1: Woonkamer
+	- led 2: Keuken
+	- led 3: Slaapkamer
+	- led 4: Tuin
+- Ventilator is airco
+- proximity sensor is trigger voor alarm
+- Rode schakelaar, in of uitschakelen van softwarematige besturing
+- groene knop: van binnen uit de poort openen, parlefong achtige toestand
+- zwarte knop: simulatie schakelaar, in combinatie met softwared
+
+6017:
+- warmtesensor met ventilator
+- grote lamp is alarm
+- schakelaar is toggle voor alarm, voor bv late tuinfeesjes
+- schakelaar, auto of manual verwarming: auto is met sensor, manual is via potentiometer 1 instellen of airco, niets of chauffage 
+- potentiometer 2: target temperatuur instellen
+
+overig:
+- admin kaartje om gui te unlocken
+- admin kaart voor deur te unlocken
