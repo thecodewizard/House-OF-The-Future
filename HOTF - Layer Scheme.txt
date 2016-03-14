@@ -1,0 +1,24 @@
+Programming Pattern Scheme - In Words:
+_______________________________________
+
+
+DAL: Bridge between ADAM Module & Logical Layer
+	--> Fetches Requested Values
+	--> Turns on/off physical components
+eg:	input:: change state physical components
+	output:: send STOP signal to rotor
+
+
+LL: Brain and decision maker
+	--> Parses command from API.
+	--> Chooses which components have to be changed for the given command
+	--> Sets Clock
+eg: 	input:: fields are changed or timer is ticking
+	output:: change state physical components
+
+
+APIL: Portal to the World and the functionality
+	--> Receives request from outside
+	--> Prepares and triggers command in Logical Layer
+eg:	input:: turn on light bathroom
+	output:: Change fields in LL.
