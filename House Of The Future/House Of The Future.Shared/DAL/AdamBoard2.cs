@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Advantech.Adam;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +9,17 @@ namespace House_Of_The_Future.Shared.DAL
 {
     public class AdamBoard2
     {
+        public const String IP = "172.23.49.102";
+        public const int PORT = 502;
         #region 172.23.49.102
 
         #region general
         public static void OpenConnetion2()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            object dinges;
+            AdamSocket socket = new AdamSocket();
+            socket.Connect(AdamType.Adam6000, IP, );
         }
         public static void CloseConnetion2()
         {
