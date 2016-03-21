@@ -12,63 +12,81 @@ namespace House_Of_The_Future.ViewModel
         #region RelayCommands
 
         #region LEDCommands
-        private RelayCommand _toggleLED1;
-        private RelayCommand _toggleLED2;
-        private RelayCommand _toggleLED3;
-        private RelayCommand _toggleLED4;
+        private RelayCommand _toggleLEDWoonkamer;
+        private RelayCommand _toggleLEDKeuken;
+        private RelayCommand _toggleLEDSlaapkamer;
+        private RelayCommand _toggleLEDTuin;
 
-        public RelayCommand CMDToggleLED1
+        public RelayCommand CMDToggleLEDWoonkamer
         {
             get
             {
-                return _toggleLED1 ?? (_toggleLED1 = new RelayCommand(
-                    () => this.ToggleLED(1)
+                return _toggleLEDWoonkamer ?? (_toggleLEDWoonkamer = new RelayCommand(
+                    () => this.TurnOnLedWoonkamer()
                   ));
             }
         }
-        public RelayCommand CMDToggleLED2
+        public RelayCommand CMDToggleLEDKeuken
         {
             get
             {
-                return _toggleLED2 ?? (_toggleLED2 = new RelayCommand(
-                    () => this.ToggleLED(2)
+                return _toggleLEDKeuken ?? (_toggleLEDKeuken = new RelayCommand(
+                    () => this.TurnOnLedKeuken()
                   ));
             }
         }
-        public RelayCommand CMDToggleLED3
+        public RelayCommand CMDToggleLEDSlaapkamer
         {
             get
             {
-                return _toggleLED3 ?? (_toggleLED3 = new RelayCommand(
-                    () => this.ToggleLED(3)
+                return _toggleLEDSlaapkamer ?? (_toggleLEDSlaapkamer = new RelayCommand(
+                    () => this.TurnOnLedSlaapkamer()
                   ));
             }
         }
-        public RelayCommand CMDToggleLED4
+        public RelayCommand CMDToggleLEDTuin
         {
             get
             {
-                return _toggleLED4 ?? (_toggleLED4 = new RelayCommand(
-                    () => this.ToggleLED(4)
+                return _toggleLEDTuin ?? (_toggleLEDTuin = new RelayCommand(
+                    () => this.TurnOnLedTuin()
                   ));
             }
         }
         #endregion
 
         #region LEDStatus
-        public Boolean isOnLED1 { get; set; }
-        public Boolean isOnLED2 { get; set; }
-        public Boolean isOnLED3 { get; set; }
-        public Boolean isOnLED4 { get; set; }
+        public Boolean isOnLEDWoonkamer { get; set; }
+        public Boolean isOnLEDKeuken { get; set; }
+        public Boolean isOnLEDSlaapkamer { get; set; }
+        public Boolean isOnLEDTuin { get; set; }
         #endregion
 
         #endregion
 
         #region Functions
-        private void ToggleLED(int LED)
+
+        #region LEDFunctions
+        private void TurnOnLedWoonkamer()
         {
 
         }
+
+        private void TurnOnLedKeuken()
+        {
+
+        }
+        private void TurnOnLedSlaapkamer()
+        {
+
+        }
+
+        private void TurnOnLedTuin()
+        {
+
+        }
+        #endregion
+
         #endregion
     }
 }
