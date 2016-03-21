@@ -1,4 +1,5 @@
-﻿using System;
+﻿using House_Of_The_Future.Common.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,11 @@ namespace House_Of_The_Future
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            AdamBoard2.TurnOnLed3();
         }
     }
 }
