@@ -15,18 +15,18 @@ namespace House_Of_The_Future.Shared.DAL
         #region 172.23.49.102
 
         #region general
-        public static void OpenConnetion2()
+        public void OpenConnetion2()
         {
-            //throw new NotImplementedException();
-            object dinges;
             AdamSocket socket = new AdamSocket();
             socket.Connect(AdamType.Adam6000, IP, ProtocolType.Tcp);
+            socket.Modbus().ForceSingleCoil(00017, true);
+            //socket.Disconnect();
         }
-        public static void CloseConnetion2()
+        public void CloseConnetion2()
         {
             throw new NotImplementedException();
         }
-        public static bool CheckConnetion2()
+        public bool CheckConnetion2()
         {
             throw new NotImplementedException();
         }
@@ -34,57 +34,57 @@ namespace House_Of_The_Future.Shared.DAL
 
         #region leds
         #region led1
-        public static void TurnOnLed1()
+        public void TurnOnLed1()
         {
             throw new NotImplementedException();
         }
-        public static void TurnOffLed1()
+        public void TurnOffLed1()
         {
             throw new NotImplementedException();
         }
-        public static bool StatusLed1()
+        public bool StatusLed1()
         {
             throw new NotImplementedException();
         }
         #endregion
         #region led2
-        public static void TurnOnLed2()
+        public void TurnOnLed2()
         {
             throw new NotImplementedException();
         }
-        public static void TurnOffLed2()
+        public void TurnOffLed2()
         {
             throw new NotImplementedException();
         }
-        public static bool StatusLed2()
+        public bool StatusLed2()
         {
             throw new NotImplementedException();
         }
         #endregion
         #region led3
-        public static void TurnOnLed3()
+        public void TurnOnLed3()
         {
             throw new NotImplementedException();
         }
-        public static void TurnOffLed3()
+        public void TurnOffLed3()
         {
             throw new NotImplementedException();
         }
-        public static bool StatusLed3()
+        public bool StatusLed3()
         {
             throw new NotImplementedException();
         }
         #endregion
         #region led4
-        public static void TurnOnLed4()
+        public void TurnOnLed4()
         {
             throw new NotImplementedException();
         }
-        public static void TurnOffLed4()
+        public void TurnOffLed4()
         {
             throw new NotImplementedException();
         }
-        public static bool StatusLed4()
+        public bool StatusLed4()
         {
             throw new NotImplementedException();
         }
@@ -92,34 +92,34 @@ namespace House_Of_The_Future.Shared.DAL
         #endregion
 
         #region ventilator2
-        public static void TurnOnVentilator2()
+        public void TurnOnVentilator2()
         {
 
         }
-        public static void TurnOffVentilator2()
+        public void TurnOffVentilator2()
         {
             throw new NotImplementedException();
         }
-        public static bool StatusVentilator2()
+        public bool StatusVentilator2()
         {
             throw new NotImplementedException();
         }
         #endregion
 
         #region inputs
-        public static bool StatusRedSwitch()
+        public bool StatusRedSwitch()
         {
             throw new NotImplementedException();
         }
-        public static bool StatusGreenButton()
+        public bool StatusGreenButton()
         {
             throw new NotImplementedException();
         }
-        public static bool StatusBlackButton()
+        public bool StatusBlackButton()
         {
             throw new NotImplementedException();
         }
-        public static double StatusProximity()
+        public double StatusProximity()
         {
             throw new NotImplementedException();
         }

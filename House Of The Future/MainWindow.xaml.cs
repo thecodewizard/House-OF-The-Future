@@ -28,7 +28,7 @@ namespace House_Of_The_Future
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            AdamBoard2.OpenConnetion2();
+            new AdamBoard2().OpenConnetion2();
         }
     }
 }
