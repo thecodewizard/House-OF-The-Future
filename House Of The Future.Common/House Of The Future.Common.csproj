@@ -37,6 +37,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\AdamDAL.cs" />
     <Compile Include="DAL\DAL.cs" />
     <Compile Include="Models\Logic\LogicalLayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
