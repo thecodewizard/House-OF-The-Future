@@ -95,12 +95,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\House Of The Future.Common\House Of The Future.Common.csproj">
-      <Project>{7d2196fb-eb5b-40f4-815f-07c130867d40}</Project>
-      <Name>House Of The Future.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
