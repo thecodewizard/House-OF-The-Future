@@ -30,5 +30,11 @@ namespace House_Of_The_Future
         {
             new AdamBoard2().OpenConnetion2();
         }
+
+        private void button_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            AdamBoard1 board1 = new AdamBoard1();
+            board1.TurnOnLamp();
+        }
     }
 }

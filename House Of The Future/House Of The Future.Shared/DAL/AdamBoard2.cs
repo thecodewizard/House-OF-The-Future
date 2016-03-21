@@ -10,6 +10,14 @@ namespace House_Of_The_Future.Shared.DAL
 {
     public class AdamBoard2
     {
+        /// <summary>
+        /// Make a new Adamboard:
+        /// 00017 - Ventilator
+        /// 00018 - LED 1
+        /// 00019 - LED 2
+        /// 00020 - LED 3
+        /// 00021 - LED 4
+        /// </summary>
         public const String IP = "172.23.49.102";
         public const int PORT = 502;
         #region 172.23.49.102

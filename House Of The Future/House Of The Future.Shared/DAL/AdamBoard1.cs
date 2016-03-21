@@ -18,6 +18,11 @@ namespace House_Of_The_Future.Shared.DAL
 
         #region 172.23.49.101
 
+        /// <summary>
+        /// Make a new Adamboard:
+        /// 00017 - Lamp
+        /// 00018 - Ventilator
+        /// </summary>
         public AdamBoard1()
         {
             this.OpenConnetion();
@@ -33,7 +38,7 @@ namespace House_Of_The_Future.Shared.DAL
         }
         public void CloseConnetion()
         {
-            throw new NotImplementedException();
+            if (Socket.Connected) Socket.Disconnect();
         }
         public bool CheckConnetion()
         {
@@ -59,7 +64,10 @@ namespace House_Of_The_Future.Shared.DAL
         #region lamp
         public void TurnOnLamp()
         {
-            throw new NotImplementedException();
+            if (!Socket.Connected) return;
+            Socket.Modbus().ForceSingleCoil(00017, true);
+            Socket.Modbus().ForceSingleCoil(00018, true);
+            Console.WriteLine("Done");
         }
         public void TurnOffLamp()
         {
