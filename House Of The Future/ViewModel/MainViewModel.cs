@@ -62,64 +62,10 @@ namespace House_Of_The_Future.ViewModel
         public Boolean isOnLED4 { get; set; }
         #endregion
 
-        #region ButtonCommands
-        //private RelayCommand c;
-        //public RelayCommand CMDToggleLED1
-        //{
-        //    get
-        //    {
-        //        return _toggleLED1 ?? (_toggleLED1 = new RelayCommand(
-        //            () => this.ToggleLED(1)
-        //          ));
-        //    }
-        //}
-        #endregion
-
-        #region ButtonStatus
-        #endregion
-
-        #region Sensor & Rotor Commands
-        private RelayCommand _toggleHeatingVent;
-        public RelayCommand CMDToggleHeatingVent
-        {
-            get
-            {
-                return _toggleHeatingVent ?? (_toggleHeatingVent = new RelayCommand(
-                    () => this.ToggleHeating()
-                  ));
-            }
-        }
-
-        private RelayCommand _toggleAirco;
-        public RelayCommand CMDToggleAirco
-        {
-            get
-            {
-                return _toggleAirco ?? (_toggleAirco = new RelayCommand(
-                    () => this.ToggleAirco()
-                  ));
-            }
-        }
-        #endregion
-
-        #region Sensor & Rotor Status
-
-        #endregion
-
         #endregion
 
         #region Functions
         private void ToggleLED(int LED)
-        {
-
-        }
-
-        private void ToggleHeating()
-        {
-
-        }
-
-        private void ToggleAirco()
         {
 
         }
