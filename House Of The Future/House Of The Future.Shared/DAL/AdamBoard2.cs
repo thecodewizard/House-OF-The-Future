@@ -19,7 +19,11 @@ namespace House_Of_The_Future.Shared.DAL
         {
             AdamSocket socket = new AdamSocket();
             socket.Connect(AdamType.Adam6000, IP, ProtocolType.Tcp);
-            socket.Modbus().ForceSingleCoil(00017, true);
+            socket.Modbus().ForceSingleCoil(00017, false);
+            socket.Modbus().ForceSingleCoil(00018, false);
+            socket.Modbus().ForceSingleCoil(00019, false);
+            socket.Modbus().ForceSingleCoil(00020, false);
+            socket.Modbus().ForceSingleCoil(00021, false);
             //socket.Disconnect();
         }
         public void CloseConnetion2()
