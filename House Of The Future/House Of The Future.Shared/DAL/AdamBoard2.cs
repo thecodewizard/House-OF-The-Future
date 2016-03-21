@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Sockets;
 
 namespace House_Of_The_Future.Shared.DAL
 {
@@ -19,7 +20,7 @@ namespace House_Of_The_Future.Shared.DAL
             //throw new NotImplementedException();
             object dinges;
             AdamSocket socket = new AdamSocket();
-            socket.Connect(AdamType.Adam6000, IP, );
+            socket.Connect(AdamType.Adam6000, IP, ProtocolType.Tcp);
         }
         public static void CloseConnetion2()
         {

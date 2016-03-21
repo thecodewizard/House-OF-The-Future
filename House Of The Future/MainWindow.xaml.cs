@@ -1,4 +1,4 @@
-﻿using House_Of_The_Future.Common.DAL;
+﻿using House_Of_The_Future.Shared.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +28,7 @@ namespace House_Of_The_Future
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            AdamBoard2.TurnOnLed3();
+            AdamBoard2.OpenConnetion2();
         }
     }
 }
