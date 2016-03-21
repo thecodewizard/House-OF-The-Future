@@ -1,24 +1,19 @@
-﻿using Advantech.Adam;
-using System;
-using System.Net.Sockets;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace House_Of_The_Future.Common.DAL
+namespace House_Of_The_Future.Shared.DAL
 {
     public class AdamBoard1
     {
-        public const String IP = "172.23.49.101";
-        public const int PORT = 502;
         #region 172.23.49.101
 
         #region general
         public static void OpenConnetion1()
         {
-            AdamSocket socket = new AdamSocket();
-            socket.Connect(AdamType.Adam6000, IP, ProtocolType)
+            
         }
         public static void CloseConnetion1()
         {
