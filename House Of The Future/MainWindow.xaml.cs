@@ -23,8 +23,6 @@ namespace House_Of_The_Future
         public MainWindow()
         {
             InitializeComponent();
-
-            //TEST hhh
         }
     }
 }
