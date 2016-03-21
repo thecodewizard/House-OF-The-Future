@@ -48,9 +48,13 @@
   <ItemGroup>
     <Compile Include="DAL\AdamBoard1.cs" />
     <Compile Include="DAL\AdamBoard2.cs" />
+    <Compile Include="DAL\DAL.cs" />
     <Compile Include="Models\Logic\LogicalLayer.cs" />
     <Compile Include="Models\NoSocketException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DAL\Interface\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

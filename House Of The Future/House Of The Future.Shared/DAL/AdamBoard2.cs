@@ -5,11 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
+using House_Of_The_Future.Shared.Models;
 
 namespace House_Of_The_Future.Shared.DAL
 {
-    public class AdamBoard2
+    public class AdamBoard2 : DAL
     {
+        public const String IP = "172.23.49.102";
+        public const int PORT = 502;
+
+        #region 172.23.49.102
+
         /// <summary>
         /// Make a new Adamboard:
         /// 00017 - Ventilator
@@ -18,31 +24,15 @@ namespace House_Of_The_Future.Shared.DAL
         /// 00020 - LED 3
         /// 00021 - LED 4
         /// </summary>
-        public const String IP = "172.23.49.102";
-        public const int PORT = 502;
-        #region 172.23.49.102
-
-        #region general
-        public void OpenConnetion2()
+        public AdamBoard2()
         {
-            AdamSocket socket = new AdamSocket();
-            socket.Connect(AdamType.Adam6000, IP, ProtocolType.Tcp);
-            socket.Modbus().ForceSingleCoil(00017, false);
-            socket.Modbus().ForceSingleCoil(00018, false);
-            socket.Modbus().ForceSingleCoil(00019, false);
-            socket.Modbus().ForceSingleCoil(00020, false);
-            socket.Modbus().ForceSingleCoil(00021, false);
-            //socket.Disconnect();
+            this.OpenConnetion(IP, PORT);
+            //socket.Modbus().ForceSingleCoil(00017, false);
+            //socket.Modbus().ForceSingleCoil(00018, false);
+            //socket.Modbus().ForceSingleCoil(00019, false);
+            //socket.Modbus().ForceSingleCoil(00020, false);
+            //socket.Modbus().ForceSingleCoil(00021, false);
         }
-        public void CloseConnetion2()
-        {
-            throw new NotImplementedException();
-        }
-        public bool CheckConnetion2()
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
 
         #region leds
         #region led1
@@ -106,7 +96,7 @@ namespace House_Of_The_Future.Shared.DAL
         #region ventilator2
         public void TurnOnVentilator2()
         {
-
+            throw new NotImplementedException();
         }
         public void TurnOffVentilator2()
         {

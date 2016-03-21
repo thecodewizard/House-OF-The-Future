@@ -9,12 +9,10 @@ using System.Threading.Tasks;
 
 namespace House_Of_The_Future.Shared.DAL
 {
-    public class AdamBoard1
+    public class AdamBoard1 : DAL
     {
-        public const String IP = "172.23.49.101";
+        public const String IP = "172.23.49.102";
         public const int PORT = 502;
-
-        public AdamSocket Socket { get; private set; }
 
         #region 172.23.49.101
 
@@ -25,26 +23,8 @@ namespace House_Of_The_Future.Shared.DAL
         /// </summary>
         public AdamBoard1()
         {
-            this.OpenConnetion();
+            this.OpenConnetion(IP, PORT);
         }
-
-        #region general
-        public void OpenConnetion()
-        {
-            AdamSocket socket = new AdamSocket();
-            socket.Connect(IP, ProtocolType.Tcp, PORT);
-            if (socket.Connected) this.Socket = socket;
-            else throw new NoSocketException("Could not open Connection in Board 1");
-        }
-        public void CloseConnetion()
-        {
-            if (Socket.Connected) Socket.Disconnect();
-        }
-        public bool CheckConnetion()
-        {
-            throw new NotImplementedException();
-        }
-        #endregion
 
         #region ventilator1
         public void TurnOnVentilator()
@@ -64,7 +44,7 @@ namespace House_Of_The_Future.Shared.DAL
         #region lamp
         public void TurnOnLamp()
         {
-            if (!Socket.Connected) return;
+            if(!isConnected()) return;
             Socket.Modbus().ForceSingleCoil(00017, true);
             Socket.Modbus().ForceSingleCoil(00018, true);
             Console.WriteLine("Done");
