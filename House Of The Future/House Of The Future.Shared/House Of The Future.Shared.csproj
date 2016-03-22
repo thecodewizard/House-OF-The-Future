@@ -51,6 +51,7 @@
     <Compile Include="DAL\DAL.cs" />
     <Compile Include="Models\Logic\LogicalLayer.cs" />
     <Compile Include="Models\NoSocketException.cs" />
+    <Compile Include="Models\NotConnectedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

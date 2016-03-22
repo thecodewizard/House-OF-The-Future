@@ -8,7 +8,12 @@
         Title="MainWindow" Height="350" Width="525">
     <Grid>
         <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="226,151,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-        <Button x:Name="button_Copy" Content="Board1" HorizontalAlignment="Left" Margin="226,194,0,0" VerticalAlignment="Top" Width="75" Click="button_Copy_Click"/>
+        <Button x:Name="btnOn" Content="Turn ON" HorizontalAlignment="Left" Margin="99,205,0,0" VerticalAlignment="Top" Width="75" Click="btnOn_Click"/>
+        <Button x:Name="btnStatus" Content="Check Status" HorizontalAlignment="Left" Margin="226,205,0,0" VerticalAlignment="Top" Width="75" Click="btnStatus_Click"/>
+        <Button x:Name="btnOff" Content="Turn Off" HorizontalAlignment="Left" Margin="341,205,0,0" VerticalAlignment="Top" Width="75" Click="btnOff_Click"/>
+        <Button x:Name="btnOn_Copy" Content="Turn ON" HorizontalAlignment="Left" Margin="99,230,0,0" VerticalAlignment="Top" Width="75" Click="btnOn_Copy_Click"/>
+        <Button x:Name="btnStatus_Copy" Content="Check Status" HorizontalAlignment="Left" Margin="226,230,0,0" VerticalAlignment="Top" Width="75" Click="btnStatus_Copy_Click"/>
+        <Button x:Name="btnOff_Copy" Content="Turn Off" HorizontalAlignment="Left" Margin="341,230,0,0" VerticalAlignment="Top" Width="75" Click="btnOff_Copy_Click"/>
 
     </Grid>
 </Window>

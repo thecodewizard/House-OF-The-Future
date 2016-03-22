@@ -13,14 +13,14 @@ namespace House_Of_The_Future.Shared.DAL
     {
         public AdamSocket Socket { get; private set; }
 
-        public void OpenConnetion(String IP, int PORT)
+        public void OpenConnection(String IP, int PORT)
         {
             AdamSocket socket = new AdamSocket();
             socket.Connect(IP, ProtocolType.Tcp, PORT);
             if (socket.Connected) this.Socket = socket;
             else throw new NoSocketException("Could not open Connection in Board 1");
         }
-        public void CloseConnetion()
+        public void CloseConnection()
         {
             if (isConnected()) Socket.Disconnect();
         }

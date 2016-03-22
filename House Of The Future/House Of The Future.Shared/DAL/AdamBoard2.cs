@@ -26,7 +26,7 @@ namespace House_Of_The_Future.Shared.DAL
         /// </summary>
         public AdamBoard2()
         {
-            this.OpenConnetion(IP, PORT);
+            this.OpenConnection(IP, PORT);
             //socket.Modbus().ForceSingleCoil(00017, false);
             //socket.Modbus().ForceSingleCoil(00018, false);
             //socket.Modbus().ForceSingleCoil(00019, false);

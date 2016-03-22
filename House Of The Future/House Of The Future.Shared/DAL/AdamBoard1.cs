@@ -23,21 +23,29 @@ namespace House_Of_The_Future.Shared.DAL
         /// </summary>
         public AdamBoard1()
         {
-            this.OpenConnetion(IP, PORT);
+            this.OpenConnection(IP, PORT);
         }
 
         #region ventilator1
         public void TurnOnVentilator()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) return;
+            Socket.Modbus().ForceSingleCoil(00018, true);
+            Console.WriteLine("Board 1 - ventilator turned on");
         }
         public void TurnOffVentilator()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) return;
+            Socket.Modbus().ForceSingleCoil(00018, false);
+            Console.WriteLine("Board 1 - ventilator turned off");
         }
         public bool StatusVentilator()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) throw new NotConnectedException("The Ventilator is not connected");
+
+            bool[] status = new bool[1];
+            Socket.Modbus().ReadCoilStatus(00018, 1, out status);
+            return status.First<bool>();
         }
         #endregion
 
@@ -46,23 +54,32 @@ namespace House_Of_The_Future.Shared.DAL
         {
             if(!isConnected()) return;
             Socket.Modbus().ForceSingleCoil(00017, true);
-            Socket.Modbus().ForceSingleCoil(00018, true);
-            Console.WriteLine("Done");
+            Console.WriteLine("Board 1 - lamp turned on");
         }
         public void TurnOffLamp()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) return;
+            Socket.Modbus().ForceSingleCoil(00017, false);
+            Console.WriteLine("Board 1 - lamp turned off");
         }
         public bool StatusLamp()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) throw new NotConnectedException("The Lamp is not connected");
+
+            bool[] status = new bool[1];
+            Socket.Modbus().ReadCoilStatus(00017, 1, out status);
+            return status.First<bool>();
         }
         #endregion
 
         #region inputs
         public short StatusPotentiometer1()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) throw new NotConnectedException("Potentiometer1 is not connected");
+
+            byte[] status = new byte[2];
+            Socket.Modbus().ReadInputStatus(00019, 1, out status);
+            return status.First<byte>();
         }
         public short StatusPotentiometer2()
         {
