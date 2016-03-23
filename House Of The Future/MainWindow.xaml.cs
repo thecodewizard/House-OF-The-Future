@@ -64,5 +64,12 @@ namespace House_Of_The_Future
         {
             board1.TurnOffVentilator();
         }
+
+        private void btnStatusses_Click(object sender, RoutedEventArgs e)
+        {
+            String text = "";
+            text += "pot1: " + board1.StatusPotentiometer1().ToString() + Environment.NewLine;
+            MessageBox.Show("The inputs are:" + Environment.NewLine + text, "Input Statusses", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }
