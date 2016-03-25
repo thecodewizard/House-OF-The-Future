@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace House_Of_The_Future.Common.DAL
+namespace ClassLibrary1
 {
-    public class DAL
+    public class Class1
     {
-
     }
 }

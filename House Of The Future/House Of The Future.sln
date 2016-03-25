@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "House Of The Future", "House Of The Future.csproj", "{88E24199-519E-41C8-BEDB-E764F41D970A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "House Of The Future.Common", "..\House Of The Future.Common\House Of The Future.Common.csproj", "{7D2196FB-EB5B-40F4-815F-07C130867D40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "House Of The Future.Shared", "House Of The Future.Shared\House Of The Future.Shared.csproj", "{68CC3740-D901-4786-929D-444282D3038F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{88E24199-519E-41C8-BEDB-E764F41D970A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88E24199-519E-41C8-BEDB-E764F41D970A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88E24199-519E-41C8-BEDB-E764F41D970A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D2196FB-EB5B-40F4-815F-07C130867D40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D2196FB-EB5B-40F4-815F-07C130867D40}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D2196FB-EB5B-40F4-815F-07C130867D40}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D2196FB-EB5B-40F4-815F-07C130867D40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68CC3740-D901-4786-929D-444282D3038F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68CC3740-D901-4786-929D-444282D3038F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68CC3740-D901-4786-929D-444282D3038F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68CC3740-D901-4786-929D-444282D3038F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
