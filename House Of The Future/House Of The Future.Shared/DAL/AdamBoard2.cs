@@ -97,16 +97,16 @@ namespace House_Of_The_Future.Shared.DAL
         #endregion
         #endregion
 
-        #region ventilator2
-        public void TurnOnVentilator2()
+        #region ventilator
+        public void TurnOnVentilator()
         {
             throw new NotImplementedException();
         }
-        public void TurnOffVentilator2()
+        public void TurnOffVentilator()
         {
             throw new NotImplementedException();
         }
-        public bool StatusVentilator2()
+        public bool StatusVentilator()
         {
             throw new NotImplementedException();
         }
