@@ -18,7 +18,8 @@ namespace House_Of_The_Future.Shared.DAL
             AdamSocket socket = new AdamSocket();
             socket.Connect(IP, ProtocolType.Tcp, PORT);
             if (socket.Connected) this.Socket = socket;
-            else throw new NoSocketException("Could not open Connection in Board 1");
+            else
+                throw new NoSocketException("Could not open Connection in Board 1");
         }
         public void CloseConnection()
         {

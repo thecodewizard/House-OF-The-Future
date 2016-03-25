@@ -1,18 +1,6 @@
 ﻿using House_Of_The_Future.Shared.DAL;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace House_Of_The_Future
 {
@@ -21,10 +9,12 @@ namespace House_Of_The_Future
     /// </summary>
     public partial class MainWindow : Window
     {
-        private AdamBoard1 board1 = new AdamBoard1();
+        private AdamBoard1 board1;
+
         public MainWindow()
         {
             InitializeComponent();
+            board1 = new AdamBoard1();
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -69,6 +59,11 @@ namespace House_Of_The_Future
         {
             String text = "";
             text += "pot1: " + board1.StatusPotentiometer1().ToString() + Environment.NewLine;
+            //foreach(bool b in board1.AllStatuses())
+            //{
+            //    text += (b) ? "true" : "false" + Environment.NewLine;
+            //}
+
             MessageBox.Show("The inputs are:" + Environment.NewLine + text, "Input Statusses", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }

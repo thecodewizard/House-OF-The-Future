@@ -11,7 +11,7 @@ namespace House_Of_The_Future.Shared.DAL
 {
     public class AdamBoard1 : DAL
     {
-        public const String IP = "172.23.49.102";
+        public const String IP = "172.23.49.101";
         public const int PORT = 502;
 
         #region 172.23.49.101
@@ -77,9 +77,10 @@ namespace House_Of_The_Future.Shared.DAL
         {
             if (!isConnected()) throw new NotConnectedException("Potentiometer1 is not connected");
 
-            byte[] status = new byte[2];
-            Socket.Modbus().ReadInputStatus(00019, 1, out status);
-            return status.First<byte>();
+            //byte[] status = new byte[25];
+            //Socket.Modbus().ReadInputRegs(00003, 250, out status);
+            //return status.First<byte>();
+            throw new NotImplementedException();
         }
         public short StatusPotentiometer2()
         {

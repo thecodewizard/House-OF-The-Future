@@ -18,6 +18,10 @@ namespace House_Of_The_Future.Shared.DAL
 
         /// <summary>
         /// Make a new Adamboard:
+        /// 00001 & 00002 - Rode switch
+        /// 00003 - Groene Knop
+        /// 00004 - Zwarte Knop
+        /// 00005 - 00006 - 00007 - 00008 - Proximity Sensor
         /// 00017 - Ventilator
         /// 00018 - LED 1
         /// 00019 - LED 2
@@ -111,6 +115,13 @@ namespace House_Of_The_Future.Shared.DAL
         #region inputs
         public bool StatusRedSwitch()
         {
+
+            //byte[] status = new byte[1];
+            //Socket.Modbus().ReadCoilStatus(00001, 1, out status);
+            //return status.First<byte>();
+
+            //Board 1
+            /* If red switch on -> return 3. If gb -> return 4. If bb -> return 8; ... */
             throw new NotImplementedException();
         }
         public bool StatusGreenButton()
