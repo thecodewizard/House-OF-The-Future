@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace House_Of_The_Future.Shared.Models
@@ -89,7 +90,7 @@ namespace House_Of_The_Future.Shared.Models
 
         private void Bgw_DoWork(object sender, DoWorkEventArgs e)
         {
-            System.Threading.Thread.Sleep(_WAITTIME);
+            Thread.Sleep(_WAITTIME);
 
             if (board2 != null && board2.isConnected()) Allowed = board2.StatusRedSwitch();
             else Allowed = new AdamBoard2().StatusRedSwitch();
@@ -110,7 +111,7 @@ namespace House_Of_The_Future.Shared.Models
         }
         #endregion
 
-        #region Lightning
+        #region Lightning - Threaded
 
         private bool blackButtonOverride = false;
         public void DoWorkLight()
@@ -177,48 +178,65 @@ namespace House_Of_The_Future.Shared.Models
 
         private void SetLightWoonkamer(AdamBoard2 board, bool status)
         {
-            //new Thread(() =>
-            //{
-            //    Thread.CurrentThread.IsBackground = true;
-            //    /* run your code here */
-            //    Console.WriteLine("Hello, world");
-            //}).Start();
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
 
-            if (!Allowed) return;
-            bool lightOn = board.StatusLed1();
-            if (lightOn && !status) board.TurnOffLed1();
-            if (!lightOn && status) board.TurnOnLed1();
+                if (!Allowed) return;
+                bool lightOn = board.StatusLed1();
+                if (lightOn && !status) board.TurnOffLed1();
+                if (!lightOn && status) board.TurnOnLed1();
+
+            }).Start();
         }
 
         private void SetLightKeuken(AdamBoard2 board, bool status)
         {
-            if (!Allowed) return;
-            bool lightOn = board.StatusLed2();
-            if (lightOn && !status) board.TurnOffLed2();
-            if (!lightOn && status) board.TurnOnLed2();
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                if (!Allowed) return;
+                bool lightOn = board.StatusLed2();
+                if (lightOn && !status) board.TurnOffLed2();
+                if (!lightOn && status) board.TurnOnLed2();
+
+            }).Start();
         }
 
         private void SetLightSlaapkamer(AdamBoard2 board, bool status)
         {
-            if (!Allowed) return;
-            bool lightOn = board.StatusLed3();
-            if (lightOn && !status) board.TurnOffLed3();
-            if (!lightOn && status) board.TurnOnLed3();
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                if (!Allowed) return;
+                bool lightOn = board.StatusLed3();
+                if (lightOn && !status) board.TurnOffLed3();
+                if (!lightOn && status) board.TurnOnLed3();
+
+            }).Start();
         }
 
         private void SetLightTuin(AdamBoard2 board, bool status)
         {
-            if (!Allowed) return;
-            bool lightOn = board.StatusLed4();
-            if (lightOn && !status) board.TurnOffLed4();
-            if (!lightOn && status) board.TurnOnLed4();
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                if (!Allowed) return;
+                bool lightOn = board.StatusLed4();
+                if (lightOn && !status) board.TurnOffLed4();
+                if (!lightOn && status) board.TurnOnLed4();
+
+            }).Start();
         }
 
         #endregion
 
         #endregion
 
-        #region Temperature Management
+        #region Temperature Management - Threaded
 
         private bool? _autoHeatManagement;
 
@@ -228,7 +246,11 @@ namespace House_Of_The_Future.Shared.Models
                 if (!_autoHeatManagement.HasValue) _autoHeatManagement = false;
                 return _autoHeatManagement.Value;
             }
-            set { _autoHeatManagement = value; }
+            set {
+                if (_autoHeatManagement == value) return;
+                _autoHeatManagement = value;
+                OnPropertyChanged();
+            }
         }
 
         private void DoWorkTempManagement()
@@ -251,7 +273,7 @@ namespace House_Of_The_Future.Shared.Models
                     SetHeating(board1, false);
                 } else
                 {
-                    //The temperature is between hysterese and target threshold.
+                    //The temperature is between target + hysterese threshold.
                     //Turn off with calculated hysterese
                     if(board1.StatusVentilator())
                     {
@@ -282,23 +304,38 @@ namespace House_Of_The_Future.Shared.Models
                         break;
                 }
             }
+
+            //Set the autoheating property
+            AutoHeatManagement = board1.StatusSwitch2();
         }
 
         #region Private methods
         private void SetAirco(AdamBoard2 board, bool status)
         {
-            if (!Allowed) return;
-            bool ventOn = board.StatusVentilator();
-            if (ventOn && !status) board.TurnOffVentilator();
-            if (!ventOn && status) board.TurnOnVentilator();
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                if (!Allowed) return;
+                bool ventOn = board.StatusVentilator();
+                if (ventOn && !status) board.TurnOffVentilator();
+                if (!ventOn && status) board.TurnOnVentilator();
+
+            }).Start();
         }
 
         private void SetHeating(AdamBoard1 board, bool status)
         {
-            if (!Allowed) return;
-            bool ventOn = board.StatusVentilator();
-            if (ventOn && !status) board.TurnOffVentilator();
-            if (!ventOn && status) board.TurnOnVentilator();
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                if (!Allowed) return;
+                bool ventOn = board.StatusVentilator();
+                if (ventOn && !status) board.TurnOffVentilator();
+                if (!ventOn && status) board.TurnOnVentilator();
+
+            }).Start();
         }
         #endregion
 
@@ -308,10 +345,13 @@ namespace House_Of_The_Future.Shared.Models
 
         private void DoWorkAlarm()
         {
-            ProximityEnum proximity = board2.StatusProximity();
-            if (proximity == ProximityEnum.CLOSE || proximity == ProximityEnum.NEAR)
-                TurnOnAlarm();
-            else TurnOffAlarm();
+            if (board1.StatusSwitch1())
+            {
+                ProximityEnum proximity = board2.StatusProximity();
+                if (proximity == ProximityEnum.CLOSE || proximity == ProximityEnum.NEAR)
+                    TurnOnAlarm();
+                else TurnOffAlarm();
+            }
         }
 
         public static void TurnOnAlarm()
@@ -325,8 +365,7 @@ namespace House_Of_The_Future.Shared.Models
         public void TurnOffAlarm()
         {
             if (!Allowed) return;
-            bool isAlarmOn = board1.StatusLamp();
-            if (isAlarmOn) board1.TurnOffLamp();
+            if (board1.StatusLamp()) board1.TurnOffLamp();
         }
 
         #endregion
