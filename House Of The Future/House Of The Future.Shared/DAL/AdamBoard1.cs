@@ -73,17 +73,17 @@ namespace House_Of_The_Future.Shared.DAL
         #endregion
 
         #region inputs
-        public short StatusPotentiometer1()
+        public TemperatureEnum StatusPotentiometer1()
+        {
+            throw new NotImplementedException();
+        }
+        public short StatusPotentiometer2()
         {
             if (!isConnected()) throw new NotConnectedException("Potentiometer1 is not connected");
 
             //byte[] status = new byte[25];
             //Socket.Modbus().ReadInputRegs(00003, 250, out status);
             //return status.First<byte>();
-            throw new NotImplementedException();
-        }
-        public short StatusPotentiometer2()
-        {
             throw new NotImplementedException();
         }
         public short StatusPotentiometer3()
@@ -95,6 +95,10 @@ namespace House_Of_The_Future.Shared.DAL
             throw new NotImplementedException();
         }
         public bool StatusSwitch2()
+        {
+            throw new NotImplementedException();
+        }
+        public double StatusTemperatureSensor()
         {
             throw new NotImplementedException();
         }

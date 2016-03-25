@@ -8,109 +8,207 @@ using System.Threading.Tasks;
 
 namespace House_Of_The_Future.Shared.Models
 {
-    public class LogicalLayer
+    public class LogicalLayer : LLBaseClass
     {
-        /*
-        * Methods:
-        * TurnOffAllLights() -> LED
-        * TurnOnAllLights() -> LED
-        * ToggleLight() -> for each LED
-        */
+        #region Properties
+
+        private bool _softwareAllowed;
+
+        public bool Allowed
+        {
+            get { return _softwareAllowed; }
+            set
+            {
+                if (_softwareAllowed == value) return;
+                _softwareAllowed = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isGateOpen;
+
+        public bool IsGateOpen
+        {
+            get { return _isGateOpen; }
+            set {
+                if (_isGateOpen == value) return;
+                _isGateOpen = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isGuiUnlocked;
+
+        public bool IsGuiUnlocked
+        {
+            get { return _isGuiUnlocked; }
+            set {
+                if (_isGuiUnlocked == value) return;
+                _isGuiUnlocked = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isDoorUnlocked;
+
+        public bool IsDoorUnlocked
+        {
+            get { return _isDoorUnlocked; }
+            set {
+                if (_isDoorUnlocked == value) return;
+                _isDoorUnlocked = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
 
         private AdamBoard1 board1;
         private AdamBoard2 board2;
         private BackgroundWorker bgw;
+        private const int _WAITTIME = 100;
 
         public LogicalLayer()
         {
             board1 = new AdamBoard1();
             board2 = new AdamBoard2();
+            SetUpBackgroundworker();
+        }
+
+        #region BackgroundWorker
+        private void SetUpBackgroundworker()
+        {
             bgw = new BackgroundWorker();
 
             bgw.WorkerSupportsCancellation = true;
             bgw.WorkerReportsProgress = true;
             bgw.DoWork += Bgw_DoWork;
+            bgw.RunWorkerCompleted += Bgw_RunWorkerCompleted;
+            bgw.RunWorkerAsync();
         }
+
+        private void Bgw_DoWork(object sender, DoWorkEventArgs e)
+        {
+            System.Threading.Thread.Sleep(_WAITTIME);
+
+            if (board2 != null && board2.isConnected()) Allowed = board2.StatusRedSwitch();
+            else Allowed = new AdamBoard2().StatusRedSwitch();
+
+            if (Allowed)
+            {
+                DoWorkAlarm();
+                DoWorkLight();
+                DoWorkTempManagement();
+                DoWorkGate();
+                DoLockingWork();
+            }
+        }
+
+        private void Bgw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (!bgw.IsBusy) bgw.RunWorkerAsync();
+        }
+        #endregion
 
         #region Lightning
 
-        public static void TurnOffAllLights()
+        private bool blackButtonOverride = false;
+        public void DoWorkLight()
         {
-            AdamBoard2 board = new AdamBoard2();
-            SetLightWoonkamer(board, false);
-            SetLightKeuken(board, false);
-            SetLightSlaapkamer(board, false);
-            SetLightTuin(board, false);
-            board.CloseConnection();
+            bool btnStatus = board2.StatusBlackButton();
+            if (!blackButtonOverride)
+            {
+                if (btnStatus)
+                {
+                    ToggleLightTuin();
+                    blackButtonOverride = true; //Set the override lock.
+                    //This to keep the port from opening and closing while the user keeps pressing the button
+                }
+            } else
+            {
+                if (!btnStatus)
+                {
+                    blackButtonOverride = false; //Lift the override when the user releases the button
+                }
+            }
         }
 
-        public static void TurnOnAllLights()
+        public void TurnOffAllLights()
         {
-            AdamBoard2 board = new AdamBoard2();
-            SetLightWoonkamer(board, true);
-            SetLightKeuken(board, true);
-            SetLightSlaapkamer(board, true);
-            SetLightTuin(board, true);
-            board.CloseConnection();
+            SetLightWoonkamer(board2, false);
+            SetLightKeuken(board2, false);
+            SetLightSlaapkamer(board2, false);
+            SetLightTuin(board2, false);
         }
 
-        public static void ToggleLightWoonkamer()
+        public void TurnOnAllLights()
         {
-            AdamBoard2 board = new AdamBoard2();
-            if (board.StatusLed1()) SetLightWoonkamer(board, false);
-            else SetLightWoonkamer(board, true);
-            board.CloseConnection();
+            SetLightWoonkamer(board2, true);
+            SetLightKeuken(board2, true);
+            SetLightSlaapkamer(board2, true);
+            SetLightTuin(board2, true);
         }
 
-        public static void ToggleLightKeuken()
+        public void ToggleLightWoonkamer()
         {
-            AdamBoard2 board = new AdamBoard2();
-            if (board.StatusLed2()) SetLightKeuken(board, false);
-            else SetLightKeuken(board, true);
-            board.CloseConnection();
+            if (board2.StatusLed1()) SetLightWoonkamer(board2, false);
+            else SetLightWoonkamer(board2, true);
         }
 
-        public static void ToggleLightSlaapkamer()
+        public void ToggleLightKeuken()
         {
-            AdamBoard2 board = new AdamBoard2();
-            if (board.StatusLed3()) SetLightSlaapkamer(board, false);
-            else SetLightSlaapkamer(board, true);
-            board.CloseConnection();
+            if (board2.StatusLed2()) SetLightKeuken(board2, false);
+            else SetLightKeuken(board2, true);
         }
 
-        public static void ToggleLightTuin()
+        public  void ToggleLightSlaapkamer()
         {
-            AdamBoard2 board = new AdamBoard2();
-            if (board.StatusLed4()) SetLightTuin(board, false);
-            else SetLightTuin(board, true);
-            board.CloseConnection();
+            if (board2.StatusLed3()) SetLightSlaapkamer(board2, false);
+            else SetLightSlaapkamer(board2, true);
+        }
+
+        public  void ToggleLightTuin()
+        {
+            if (board2.StatusLed4()) SetLightTuin(board2, false);
+            else SetLightTuin(board2, true);
         }
 
         #region PrivateMethods
 
-        private static void SetLightWoonkamer(AdamBoard2 board, bool status)
+        private void SetLightWoonkamer(AdamBoard2 board, bool status)
         {
+            //new Thread(() =>
+            //{
+            //    Thread.CurrentThread.IsBackground = true;
+            //    /* run your code here */
+            //    Console.WriteLine("Hello, world");
+            //}).Start();
+
+            if (!Allowed) return;
             bool lightOn = board.StatusLed1();
             if (lightOn && !status) board.TurnOffLed1();
             if (!lightOn && status) board.TurnOnLed1();
         }
 
-        private static void SetLightKeuken(AdamBoard2 board, bool status)
+        private void SetLightKeuken(AdamBoard2 board, bool status)
         {
+            if (!Allowed) return;
             bool lightOn = board.StatusLed2();
             if (lightOn && !status) board.TurnOffLed2();
             if (!lightOn && status) board.TurnOnLed2();
         }
 
-        private static void SetLightSlaapkamer(AdamBoard2 board, bool status)
+        private void SetLightSlaapkamer(AdamBoard2 board, bool status)
         {
+            if (!Allowed) return;
             bool lightOn = board.StatusLed3();
             if (lightOn && !status) board.TurnOffLed3();
             if (!lightOn && status) board.TurnOnLed3();
         }
 
-        private static void SetLightTuin(AdamBoard2 board, bool status)
+        private void SetLightTuin(AdamBoard2 board, bool status)
         {
+            if (!Allowed) return;
             bool lightOn = board.StatusLed4();
             if (lightOn && !status) board.TurnOffLed4();
             if (!lightOn && status) board.TurnOnLed4();
@@ -122,36 +220,167 @@ namespace House_Of_The_Future.Shared.Models
 
         #region Temperature Management
 
-        private void Bgw_DoWork(object sender, DoWorkEventArgs e)
+        private bool? _autoHeatManagement;
+
+        public bool AutoHeatManagement
         {
-            throw new NotImplementedException();
+            get {
+                if (!_autoHeatManagement.HasValue) _autoHeatManagement = false;
+                return _autoHeatManagement.Value;
+            }
+            set { _autoHeatManagement = value; }
         }
 
-        public static void SetAutomaticTemperatureManagement()
+        private void DoWorkTempManagement()
         {
+            if (AutoHeatManagement)
+            {
+                short targetTempButton = board1.StatusPotentiometer2();
+                double targetTemp = (targetTempButton / 255) * 20;
+                double currentTemp = board1.StatusTemperatureSensor();
+                double hysterese = 2.3;
 
-        }
-
-        public static void SetManualTemperatureManagement()
-        {
-
+                //Determine full heating/airo with hysterese to save resources
+                if(currentTemp < (targetTemp - hysterese))
+                {
+                    SetAirco(board2, false);
+                    SetHeating(board1, true);
+                } else if (currentTemp > (targetTemp + hysterese))
+                {
+                    SetAirco(board2, true);
+                    SetHeating(board1, false);
+                } else
+                {
+                    //The temperature is between hysterese and target threshold.
+                    //Turn off with calculated hysterese
+                    if(board1.StatusVentilator())
+                    {
+                        //If the heating is on, turn off at target - threshold
+                        if (currentTemp >= (targetTemp - (hysterese / 2))) SetHeating(board1, false);
+                    }
+                    if (board2.StatusVentilator())
+                    {
+                        //If the airco is on, turn off at target + threshold
+                        if (currentTemp <= (targetTemp + (hysterese / 2))) SetAirco(board2, false);
+                    }
+                }
+            } else
+            {
+                switch (board1.StatusPotentiometer1())
+                {
+                    case TemperatureEnum.AIRCO:
+                        SetAirco(board2, true);
+                        SetHeating(board1, false);
+                        break;
+                    case TemperatureEnum.HEATING:
+                        SetAirco(board2, false);
+                        SetHeating(board1, true);
+                        break;
+                    case TemperatureEnum.NONE:
+                        SetAirco(board2, false);
+                        SetHeating(board1, true);
+                        break;
+                }
+            }
         }
 
         #region Private methods
-        private static void SetAirco(AdamBoard2 board, bool status)
+        private void SetAirco(AdamBoard2 board, bool status)
         {
+            if (!Allowed) return;
             bool ventOn = board.StatusVentilator();
             if (ventOn && !status) board.TurnOffVentilator();
             if (!ventOn && status) board.TurnOnVentilator();
         }
 
-        private static void SetHeating(AdamBoard1 board, bool status)
+        private void SetHeating(AdamBoard1 board, bool status)
         {
+            if (!Allowed) return;
             bool ventOn = board.StatusVentilator();
             if (ventOn && !status) board.TurnOffVentilator();
             if (!ventOn && status) board.TurnOnVentilator();
         }
         #endregion
+
+        #endregion
+
+        #region Alarm
+
+        private void DoWorkAlarm()
+        {
+            ProximityEnum proximity = board2.StatusProximity();
+            if (proximity == ProximityEnum.CLOSE || proximity == ProximityEnum.NEAR)
+                TurnOnAlarm();
+            else TurnOffAlarm();
+        }
+
+        public static void TurnOnAlarm()
+        {
+            AdamBoard1 board = new AdamBoard1();
+            if (board.StatusLamp() == false)
+                board.TurnOnLamp();
+            board.CloseConnection();
+        }
+
+        public void TurnOffAlarm()
+        {
+            if (!Allowed) return;
+            bool isAlarmOn = board1.StatusLamp();
+            if (isAlarmOn) board1.TurnOffLamp();
+        }
+
+        #endregion
+
+        #region Gate
+
+        private bool greenButtonOverride = false;
+        private void DoWorkGate()
+        {
+            bool btnStatus = board2.StatusGreenButton();
+            if (!greenButtonOverride)
+            {
+                if (btnStatus)
+                {
+                    if (!IsGateOpen) OpenGate();
+                    else CloseGate();
+
+                    //Set the override lock.
+                    //This to keep the port from opening and closing while the user keeps pressing the button
+                    greenButtonOverride = true;
+                }
+            } else
+            {
+                if (!btnStatus)
+                {
+                    //Lift the override when the user releases the button
+                    greenButtonOverride = false;
+                }
+            }
+        }
+
+        #region private methods
+        private void OpenGate()
+        {
+            if (!Allowed) return;
+            if (!IsGateOpen) IsGateOpen = true;
+        }
+
+        private void CloseGate()
+        {
+            if (!Allowed) return;
+            if (IsGateOpen) IsGateOpen = false;
+        }
+        #endregion
+
+        #endregion
+
+        #region Locking
+
+        private void DoLockingWork()
+        {
+            IsGuiUnlocked = true;
+            IsDoorUnlocked = true;
+        }
 
         #endregion
     }

@@ -132,7 +132,7 @@ namespace House_Of_The_Future.Shared.DAL
         {
             throw new NotImplementedException();
         }
-        public double StatusProximity()
+        public ProximityEnum StatusProximity()
         {
             throw new NotImplementedException();
         }
