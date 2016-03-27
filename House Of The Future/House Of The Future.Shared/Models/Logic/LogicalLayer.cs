@@ -11,97 +11,6 @@ namespace House_Of_The_Future.Shared.Models
 {
     public class LogicalLayer : LLBaseClass
     {
-        #region Properties
-
-        #region Worker
-
-        public void UpdateProperties()
-        {
-            IsAlarmOn = StatusAlarm();
-        }
-
-        #endregion
-
-        #region Software
-
-        private bool _softwareAllowed;
-
-        public bool Allowed
-        {
-            get { return _softwareAllowed; }
-            set
-            {
-                if (_softwareAllowed == value) return;
-                _softwareAllowed = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _isGateOpen;
-
-        public bool IsGateOpen
-        {
-            get { return _isGateOpen; }
-            set
-            {
-                if (_isGateOpen == value) return;
-                _isGateOpen = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _isGuiUnlocked;
-
-        public bool IsGuiUnlocked
-        {
-            get { return _isGuiUnlocked; }
-            set
-            {
-                if (_isGuiUnlocked == value) return;
-                _isGuiUnlocked = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool _isDoorUnlocked;
-
-        public bool IsDoorUnlocked
-        {
-            get { return _isDoorUnlocked; }
-            set
-            {
-                if (_isDoorUnlocked == value) return;
-                _isDoorUnlocked = value;
-                OnPropertyChanged();
-            }
-        }
-        #endregion
-
-        #region Lightning
-
-        #endregion
-
-        #region Temperature Management
-        #endregion
-
-        #region Alarm
-
-        private bool _isAlarmOn;
-
-        public bool IsAlarmOn
-        {
-            get { return _isAlarmOn; }
-            set {
-                if (_isAlarmOn == value) return;
-                _isAlarmOn = value;
-                OnPropertyChanged();
-            }
-        }
-
-        #endregion
-
-        #endregion
-
         private AdamBoard1 board1;
         private AdamBoard2 board2;
         private BackgroundWorker bgw;
@@ -149,30 +58,76 @@ namespace House_Of_The_Future.Shared.Models
         {
             if (!bgw.IsBusy) bgw.RunWorkerAsync();
         }
+
+        private void UpdateProperties()
+        {
+            //LIGHTING
+            IsLightWoonkamerOn = board2.StatusLed1();
+            IsLightKeukenOn = board2.StatusLed2();
+            IsLightSlaapkamerOn = board2.StatusLed3();
+            IsLightTuinOn = board2.StatusLed4();
+
+            //TEMPERATURE
+            IsAutoManaged = board1.StatusSwitch2();
+            IsHeatingOn = board1.StatusVentilator();
+            IsAircoOn = board2.StatusVentilator();
+            TargetTemperature = TargetTemperatureCalculator.GetTemperature(board1.StatusPotentiometer2());
+
+            //ALARM
+            IsAlarmOn = StatusAlarm();
+            IsAlarmSet = board1.StatusSwitch1();
+        }
         #endregion
 
-        #region Lightning - Threaded
+        #region Lighting - Threaded
 
-        private bool blackButtonOverride = false;
-        public void DoWorkLight()
+        #region Properties
+
+        private bool _isLightWoonkamerOn;
+        private bool _isLightKeukenOn;
+        private bool _isLightSlaapkamerOn;
+        private bool _isLightTuinOn;
+
+        public bool IsLightWoonkamerOn
         {
-            bool btnStatus = board2.StatusBlackButton();
-            if (!blackButtonOverride)
-            {
-                if (btnStatus)
-                {
-                    ToggleLightTuin();
-                    blackButtonOverride = true; //Set the override lock.
-                    //This to keep the port from opening and closing while the user keeps pressing the button
-                }
-            } else
-            {
-                if (!btnStatus)
-                {
-                    blackButtonOverride = false; //Lift the override when the user releases the button
-                }
+            get { return _isLightWoonkamerOn; }
+            set {
+                if (_isLightWoonkamerOn == value) return;
+                _isLightWoonkamerOn = value;
+                OnPropertyChanged();
             }
         }
+        public bool IsLightKeukenOn
+        {
+            get { return _isLightKeukenOn; }
+            set {
+                if (_isLightKeukenOn == value) return;
+                _isLightKeukenOn = value;
+                OnPropertyChanged();
+            }
+        }
+        public bool IsLightSlaapkamerOn
+        {
+            get { return _isLightSlaapkamerOn; }
+            set {
+                if (_isLightSlaapkamerOn == value) return;
+                _isLightSlaapkamerOn = value;
+                OnPropertyChanged();
+            }
+        }
+        public bool IsLightTuinOn
+        {
+            get { return _isLightTuinOn; }
+            set {
+                if (_isLightTuinOn == value) return;
+                _isLightTuinOn = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region Methods
 
         public void TurnOffAllLights()
         {
@@ -202,17 +157,19 @@ namespace House_Of_The_Future.Shared.Models
             else SetLightKeuken(board2, true);
         }
 
-        public  void ToggleLightSlaapkamer()
+        public void ToggleLightSlaapkamer()
         {
             if (board2.StatusLed3()) SetLightSlaapkamer(board2, false);
             else SetLightSlaapkamer(board2, true);
         }
 
-        public  void ToggleLightTuin()
+        public void ToggleLightTuin()
         {
             if (board2.StatusLed4()) SetLightTuin(board2, false);
             else SetLightTuin(board2, true);
         }
+
+        #endregion
 
         #region PrivateMethods
 
@@ -274,80 +231,82 @@ namespace House_Of_The_Future.Shared.Models
 
         #endregion
 
+        private bool blackButtonOverride = false;
+        private void DoWorkLight()
+        {
+            bool btnStatus = board2.StatusBlackButton();
+            if (!blackButtonOverride)
+            {
+                if (btnStatus)
+                {
+                    ToggleLightTuin();
+                    blackButtonOverride = true; //Set the override lock.
+                    //This to keep the port from opening and closing while the user keeps pressing the button
+                }
+            } else
+            {
+                if (!btnStatus)
+                {
+                    blackButtonOverride = false; //Lift the override when the user releases the button
+                }
+            }
+        }
+
         #endregion
 
         #region Temperature Management - Threaded
 
-        private bool? _autoHeatManagement;
+        #region Properties
 
-        public bool AutoHeatManagement
+        private bool? _autoHeatManagement;
+        private bool _isHeatingOn;
+        private bool _isAircoOn;
+        private double _targetTemperature;
+
+        public bool IsAutoManaged
         {
-            get {
+            get
+            {
                 if (!_autoHeatManagement.HasValue) _autoHeatManagement = false;
                 return _autoHeatManagement.Value;
             }
-            set {
+            set
+            {
                 if (_autoHeatManagement == value) return;
                 _autoHeatManagement = value;
                 OnPropertyChanged();
             }
         }
-
-        private void DoWorkTempManagement()
+        public bool IsHeatingOn
         {
-            if (AutoHeatManagement)
-            {
-                short targetTempButton = board1.StatusPotentiometer2();
-                double targetTemp = (targetTempButton / 255) * 20;
-                double currentTemp = board1.StatusTemperatureSensor();
-                double hysterese = 2.3;
-
-                //Determine full heating/airo with hysterese to save resources
-                if(currentTemp < (targetTemp - hysterese))
-                {
-                    SetAirco(board2, false);
-                    SetHeating(board1, true);
-                } else if (currentTemp > (targetTemp + hysterese))
-                {
-                    SetAirco(board2, true);
-                    SetHeating(board1, false);
-                } else
-                {
-                    //The temperature is between target + hysterese threshold.
-                    //Turn off with calculated hysterese
-                    if(board1.StatusVentilator())
-                    {
-                        //If the heating is on, turn off at target - threshold
-                        if (currentTemp >= (targetTemp - (hysterese / 2))) SetHeating(board1, false);
-                    }
-                    if (board2.StatusVentilator())
-                    {
-                        //If the airco is on, turn off at target + threshold
-                        if (currentTemp <= (targetTemp + (hysterese / 2))) SetAirco(board2, false);
-                    }
-                }
-            } else
-            {
-                switch (board1.StatusPotentiometer1())
-                {
-                    case TemperatureEnum.AIRCO:
-                        SetAirco(board2, true);
-                        SetHeating(board1, false);
-                        break;
-                    case TemperatureEnum.HEATING:
-                        SetAirco(board2, false);
-                        SetHeating(board1, true);
-                        break;
-                    case TemperatureEnum.NONE:
-                        SetAirco(board2, false);
-                        SetHeating(board1, true);
-                        break;
-                }
+            get { return _isHeatingOn; }
+            set {
+                if (_isHeatingOn == value) return;
+                _isHeatingOn = value;
+                OnPropertyChanged();
             }
-
-            //Set the autoheating property
-            AutoHeatManagement = board1.StatusSwitch2();
         }
+        public bool IsAircoOn
+        {
+            get { return _isAircoOn; }
+            set
+            {
+                if (_isAircoOn == value) return;
+                _isAircoOn = value;
+                OnPropertyChanged();
+            }
+        }
+        public double TargetTemperature
+        {
+            get { return _targetTemperature; }
+            set
+            {
+                if (_targetTemperature == value) return;
+                _targetTemperature = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
 
         #region Private methods
         private void SetAirco(AdamBoard2 board, bool status)
@@ -379,20 +338,92 @@ namespace House_Of_The_Future.Shared.Models
         }
         #endregion
 
+        private void DoWorkTempManagement()
+        {
+            if (IsAutoManaged)
+            {
+                double targetTemp = TargetTemperatureCalculator.GetTemperature(board1.StatusPotentiometer2());
+                double currentTemp = board1.StatusTemperatureSensor();
+                double hysterese = 2.3;
+
+                //Determine full heating/airo with hysterese to save resources
+                if (currentTemp < (targetTemp - hysterese))
+                {
+                    SetAirco(board2, false);
+                    SetHeating(board1, true);
+                } else if (currentTemp > (targetTemp + hysterese))
+                {
+                    SetAirco(board2, true);
+                    SetHeating(board1, false);
+                } else
+                {
+                    //The temperature is between target + hysterese threshold.
+                    //Turn off with calculated hysterese
+                    if (board1.StatusVentilator())
+                    {
+                        //If the heating is on, turn off at target - threshold
+                        if (currentTemp >= (targetTemp - (hysterese / 2))) SetHeating(board1, false);
+                    }
+                    if (board2.StatusVentilator())
+                    {
+                        //If the airco is on, turn off at target + threshold
+                        if (currentTemp <= (targetTemp + (hysterese / 2))) SetAirco(board2, false);
+                    }
+                }
+            } else
+            {
+                switch (board1.StatusPotentiometer1())
+                {
+                    case TemperatureEnum.AIRCO:
+                        SetAirco(board2, true);
+                        SetHeating(board1, false);
+                        break;
+                    case TemperatureEnum.HEATING:
+                        SetAirco(board2, false);
+                        SetHeating(board1, true);
+                        break;
+                    case TemperatureEnum.NONE:
+                        SetAirco(board2, false);
+                        SetHeating(board1, true);
+                        break;
+                }
+            }
+        }
+
         #endregion
 
         #region Alarm
 
-        private void DoWorkAlarm()
+        #region Properties
+
+        private bool _isAlarmOn;
+
+        public bool IsAlarmOn
         {
-            if (board1.StatusSwitch1())
+            get { return _isAlarmOn; }
+            set
             {
-                ProximityEnum proximity = board2.StatusProximity();
-                if (proximity == ProximityEnum.CLOSE || proximity == ProximityEnum.NEAR)
-                    TurnOnAlarm();
-                else TurnOffAlarm();
+                if (_isAlarmOn == value) return;
+                _isAlarmOn = value;
+                OnPropertyChanged();
             }
         }
+
+        private bool _isAlarmSet;
+
+        public bool IsAlarmSet
+        {
+            get { return _isAlarmSet; }
+            set {
+                if (_isAlarmSet == value) return;
+                _isAlarmSet = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region Methods
 
         public static void TurnOnAlarm()
         {
@@ -408,14 +439,57 @@ namespace House_Of_The_Future.Shared.Models
             if (board1.StatusLamp()) board1.TurnOffLamp();
         }
 
-        public bool StatusAlarm()
+        private bool StatusAlarm()
         {
             return board1.StatusLamp();
         }
 
         #endregion
 
+        private void DoWorkAlarm()
+        {
+            if (board1.StatusSwitch1())
+            {
+                ProximityEnum proximity = board2.StatusProximity();
+                if (proximity == ProximityEnum.CLOSE || proximity == ProximityEnum.NEAR)
+                    TurnOnAlarm();
+                else TurnOffAlarm();
+            }
+        }
+
+        #endregion
+
         #region Gate
+
+        #region Properties
+
+        private bool _isGateOpen;
+
+        public bool IsGateOpen
+        {
+            get { return _isGateOpen; }
+            set {
+                if (_isGateOpen == value) return;
+                _isGateOpen = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region private methods
+        private void OpenGate()
+        {
+            if (!Allowed) return;
+            if (!IsGateOpen) IsGateOpen = true;
+        }
+
+        private void CloseGate()
+        {
+            if (!Allowed) return;
+            if (IsGateOpen) IsGateOpen = false;
+        }
+        #endregion
 
         private bool greenButtonOverride = false;
         private void DoWorkGate()
@@ -442,23 +516,51 @@ namespace House_Of_The_Future.Shared.Models
             }
         }
 
-        #region private methods
-        private void OpenGate()
-        {
-            if (!Allowed) return;
-            if (!IsGateOpen) IsGateOpen = true;
-        }
-
-        private void CloseGate()
-        {
-            if (!Allowed) return;
-            if (IsGateOpen) IsGateOpen = false;
-        }
         #endregion
 
-        #endregion
+        #region Security
 
-        #region Locking
+        #region Properties
+
+        private bool _softwareAllowed;
+
+        public bool Allowed
+        {
+            get { return _softwareAllowed; }
+            set
+            {
+                if (_softwareAllowed == value) return;
+                _softwareAllowed = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isGuiUnlocked;
+
+        public bool IsGuiUnlocked
+        {
+            get { return _isGuiUnlocked; }
+            set
+            {
+                if (_isGuiUnlocked == value) return;
+                _isGuiUnlocked = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isDoorUnlocked;
+
+        public bool IsDoorUnlocked
+        {
+            get { return _isDoorUnlocked; }
+            set
+            {
+                if (_isDoorUnlocked == value) return;
+                _isDoorUnlocked = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
 
         private void DoLockingWork()
         {
@@ -467,5 +569,15 @@ namespace House_Of_The_Future.Shared.Models
         }
 
         #endregion
+
+    }
+
+    public class TargetTemperatureCalculator
+    {
+        public static Double GetTemperature(short buttonInput)
+        {
+            double targetTemp = (buttonInput / 255) * 20;
+            return targetTemp;
+        }
     }
 }
