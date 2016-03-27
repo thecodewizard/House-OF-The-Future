@@ -10,7 +10,6 @@ namespace House_Of_The_Future
     public partial class MainWindow : Window
     {
         private AdamBoard1 board1;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -20,12 +19,11 @@ namespace House_Of_The_Future
         private void button_Click(object sender, RoutedEventArgs e)
         {
             AdamBoard2 board = new AdamBoard2();
-
         }
 
         private void btnOn_Click(object sender, RoutedEventArgs e)
         {
-            board1.TurnOnLamp();
+            House_Of_The_Future.Shared.Models.LogicalLayer.TurnOnAlarm();
         }
 
         private void btnStatus_Click(object sender, RoutedEventArgs e)

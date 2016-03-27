@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:House_Of_The_Future"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525"
+        DataContext="{Binding Path=Core, Source={StaticResource mainvm}}">
     <Grid>
         <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="226,151,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
         <Button x:Name="btnOn" Content="Turn ON" HorizontalAlignment="Left" Margin="99,205,0,0" VerticalAlignment="Top" Width="75" Click="btnOn_Click"/>
@@ -15,6 +16,7 @@
         <Button x:Name="btnStatus_Copy" Content="Check Status" HorizontalAlignment="Left" Margin="226,230,0,0" VerticalAlignment="Top" Width="75" Click="btnStatus_Copy_Click"/>
         <Button x:Name="btnOff_Copy" Content="Turn Off" HorizontalAlignment="Left" Margin="341,230,0,0" VerticalAlignment="Top" Width="75" Click="btnOff_Copy_Click"/>
         <Button x:Name="btnStatusses" Content="Inputs" HorizontalAlignment="Left" Margin="226,254,0,0" VerticalAlignment="Top" Width="75" Click="btnStatusses_Click"/>
+        <CheckBox Content="IsAlarmOnMVVM" HorizontalAlignment="Left" Margin="226,50,0,0" VerticalAlignment="Top" IsChecked="{Binding IsAlarmOn}" />
 
     </Grid>
 </Window>

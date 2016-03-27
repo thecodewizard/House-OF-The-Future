@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using House_Of_The_Future.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,21 @@ namespace House_Of_The_Future.ViewModel
 {
     public class MainViewModel
     {
+        /*
+        CORE COMMANDS TO BIND:
+        LIGHTNING: 
+        */
+
+        private LogicalLayer _core;
+
+        public LogicalLayer Core
+        {
+            get {
+                if (_core == null) _core = new LogicalLayer();
+                return _core;
+            }
+        }
+
         #region RelayCommands
 
         #region LEDCommands
@@ -22,7 +38,7 @@ namespace House_Of_The_Future.ViewModel
             get
             {
                 return _toggleLEDWoonkamer ?? (_toggleLEDWoonkamer = new RelayCommand(
-                    () => this.TurnOnLedWoonkamer()
+                    () => this.Core.ToggleLightWoonkamer()
                   ));
             }
         }
@@ -31,7 +47,7 @@ namespace House_Of_The_Future.ViewModel
             get
             {
                 return _toggleLEDKeuken ?? (_toggleLEDKeuken = new RelayCommand(
-                    () => this.TurnOnLedKeuken()
+                    () => this.Core.ToggleLightKeuken()
                   ));
             }
         }
@@ -40,7 +56,7 @@ namespace House_Of_The_Future.ViewModel
             get
             {
                 return _toggleLEDSlaapkamer ?? (_toggleLEDSlaapkamer = new RelayCommand(
-                    () => this.TurnOnLedSlaapkamer()
+                    () => this.Core.ToggleLightSlaapkamer()
                   ));
             }
         }
@@ -49,41 +65,9 @@ namespace House_Of_The_Future.ViewModel
             get
             {
                 return _toggleLEDTuin ?? (_toggleLEDTuin = new RelayCommand(
-                    () => this.TurnOnLedTuin()
+                    () => this.Core.ToggleLightTuin()
                   ));
             }
-        }
-        #endregion
-
-        #region LEDStatus
-        public Boolean isOnLEDWoonkamer { get; set; }
-        public Boolean isOnLEDKeuken { get; set; }
-        public Boolean isOnLEDSlaapkamer { get; set; }
-        public Boolean isOnLEDTuin { get; set; }
-        #endregion
-
-        #endregion
-
-        #region Functions
-
-        #region LEDFunctions
-        private void TurnOnLedWoonkamer()
-        {
-
-        }
-
-        private void TurnOnLedKeuken()
-        {
-
-        }
-        private void TurnOnLedSlaapkamer()
-        {
-
-        }
-
-        private void TurnOnLedTuin()
-        {
-
         }
         #endregion
 

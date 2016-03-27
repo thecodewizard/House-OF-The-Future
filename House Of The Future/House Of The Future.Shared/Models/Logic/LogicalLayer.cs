@@ -13,6 +13,17 @@ namespace House_Of_The_Future.Shared.Models
     {
         #region Properties
 
+        #region Worker
+
+        public void UpdateProperties()
+        {
+            IsAlarmOn = StatusAlarm();
+        }
+
+        #endregion
+
+        #region Software
+
         private bool _softwareAllowed;
 
         public bool Allowed
@@ -31,7 +42,8 @@ namespace House_Of_The_Future.Shared.Models
         public bool IsGateOpen
         {
             get { return _isGateOpen; }
-            set {
+            set
+            {
                 if (_isGateOpen == value) return;
                 _isGateOpen = value;
                 OnPropertyChanged();
@@ -43,7 +55,8 @@ namespace House_Of_The_Future.Shared.Models
         public bool IsGuiUnlocked
         {
             get { return _isGuiUnlocked; }
-            set {
+            set
+            {
                 if (_isGuiUnlocked == value) return;
                 _isGuiUnlocked = value;
                 OnPropertyChanged();
@@ -55,12 +68,37 @@ namespace House_Of_The_Future.Shared.Models
         public bool IsDoorUnlocked
         {
             get { return _isDoorUnlocked; }
-            set {
+            set
+            {
                 if (_isDoorUnlocked == value) return;
                 _isDoorUnlocked = value;
                 OnPropertyChanged();
             }
         }
+        #endregion
+
+        #region Lightning
+
+        #endregion
+
+        #region Temperature Management
+        #endregion
+
+        #region Alarm
+
+        private bool _isAlarmOn;
+
+        public bool IsAlarmOn
+        {
+            get { return _isAlarmOn; }
+            set {
+                if (_isAlarmOn == value) return;
+                _isAlarmOn = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
 
         #endregion
 
@@ -92,16 +130,18 @@ namespace House_Of_The_Future.Shared.Models
         {
             Thread.Sleep(_WAITTIME);
 
-            if (board2 != null && board2.isConnected()) Allowed = board2.StatusRedSwitch();
-            else Allowed = new AdamBoard2().StatusRedSwitch();
+            //if (board2 != null && board2.isConnected()) Allowed = board2.StatusRedSwitch();
+            //else Allowed = new AdamBoard2().StatusRedSwitch();
+
+            UpdateProperties();
 
             if (Allowed)
             {
                 DoWorkAlarm();
-                DoWorkLight();
-                DoWorkTempManagement();
-                DoWorkGate();
-                DoLockingWork();
+                //DoWorkLight();
+                //DoWorkTempManagement();
+                //DoWorkGate();
+                //DoLockingWork();
             }
         }
 
@@ -366,6 +406,11 @@ namespace House_Of_The_Future.Shared.Models
         {
             if (!Allowed) return;
             if (board1.StatusLamp()) board1.TurnOffLamp();
+        }
+
+        public bool StatusAlarm()
+        {
+            return board1.StatusLamp();
         }
 
         #endregion
