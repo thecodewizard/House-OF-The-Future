@@ -5,16 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:House_Of_The_Future"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="226,151,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-        <Button x:Name="btnOn" Content="Turn ON" HorizontalAlignment="Left" Margin="99,205,0,0" VerticalAlignment="Top" Width="75" Click="btnOn_Click"/>
-        <Button x:Name="btnStatus" Content="Check Status" HorizontalAlignment="Left" Margin="226,205,0,0" VerticalAlignment="Top" Width="75" Click="btnStatus_Click"/>
-        <Button x:Name="btnOff" Content="Turn Off" HorizontalAlignment="Left" Margin="341,205,0,0" VerticalAlignment="Top" Width="75" Click="btnOff_Click"/>
-        <Button x:Name="btnOn_Copy" Content="Turn ON" HorizontalAlignment="Left" Margin="99,230,0,0" VerticalAlignment="Top" Width="75" Click="btnOn_Copy_Click"/>
-        <Button x:Name="btnStatus_Copy" Content="Check Status" HorizontalAlignment="Left" Margin="226,230,0,0" VerticalAlignment="Top" Width="75" Click="btnStatus_Copy_Click"/>
-        <Button x:Name="btnOff_Copy" Content="Turn Off" HorizontalAlignment="Left" Margin="341,230,0,0" VerticalAlignment="Top" Width="75" Click="btnOff_Copy_Click"/>
-        <Button x:Name="btnStatusses" Content="Inputs" HorizontalAlignment="Left" Margin="226,254,0,0" VerticalAlignment="Top" Width="75" Click="btnStatusses_Click"/>
+        Title="MainWindow" Height="350" Width="525"
+        DataContext="{StaticResource mainvm}">
+    <Grid IsEnabled="{Binding ConnectionSuccess}">
+        <!-- POSSIBILITY 1 -->
+        <Grid DataContext="{StaticResource mainvm}" Panel.ZIndex="1">
+            <!-- THE DATACONTEXT HERE POINTS TO THE VIEWMODEL DIRECTLY -->
+            <!-- THIS GRID CAN CONTAIN ALL THE COMMANDS -->
 
+        </Grid>
+        <Grid>
+            <!-- THE DATACONTEXT HERE POINTS TO THE VIEWMODEL PROCCESSING LOGICAL LAYER -->
+            <!-- THIS GRID CAN CONTAIN ALL THE STATUSSES -->
+
+        </Grid>
+
+        <!-- POSSIBILITY 2 -->
+        <Grid>
+            <CheckBox IsChecked="{Binding Core.IsLightWoonkamerOn}" Panel.ZIndex="5" />
+            <Button Command="{Binding ToggleLEDWoonkamer}">
+                <Image Source="{Binding Core.IsLightWoonkamerOn, Converter={StaticResource lightImageConverter}}" />
+            </Button>
+        </Grid>
     </Grid>
 </Window>
