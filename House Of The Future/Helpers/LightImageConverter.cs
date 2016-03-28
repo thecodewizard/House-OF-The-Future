@@ -12,8 +12,8 @@ namespace House_Of_The_Future.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool lightStatus = (Boolean)value;
-            String imagePath = (lightStatus) ? "/Content/lightbulb_on.png" : "/Content/lightbulb_off.jpg";
+            bool lightStatus = (bool)value;
+            String imagePath = (lightStatus) ? "/Content/lightbulb_on.jpg" : "/Content/lightbulb_off.png";
             return imagePath as String;
         }
 

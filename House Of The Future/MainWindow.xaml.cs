@@ -1,5 +1,4 @@
-﻿using House_Of_The_Future.Shared.DAL;
-using System;
+﻿using System;
 using System.Windows;
 
 namespace House_Of_The_Future

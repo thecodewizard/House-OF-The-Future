@@ -4,11 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace House_Of_The_Future.ViewModel
 {
-    public class MainViewModel
+    public class MainViewModel : LLBaseClass
     {
         /*
         CORE STATUSSES TO BIND:
@@ -44,15 +45,47 @@ namespace House_Of_The_Future.ViewModel
          - TurnOffAlarm
         */
 
+        #region Properties
+
+        private bool? _connectionSuccess;
+
+        public bool ConnectionSuccess
+        {
+            get {
+                if (!_connectionSuccess.HasValue) _connectionSuccess = true;
+                return _connectionSuccess.Value;
+            }
+            private set
+            {
+                if (_connectionSuccess == value) return;
+                _connectionSuccess = value;
+                OnPropertyChanged();
+            }
+        }
+
         private LogicalLayer _core;
 
         public LogicalLayer Core
         {
-            get {
-                if (_core == null) _core = new LogicalLayer();
+            get
+            {
+                if (_core == null)
+                {
+                    try
+                    {
+                        _core = new LogicalLayer();
+                    }
+                    catch (NotConnectedException ex)
+                    {
+                        ConnectionSuccess = false;
+                        Console.WriteLine(ex.InnerException);
+                    }
+                }
                 return _core;
             }
         }
+
+        #endregion
 
         #region LightCommands
         private RelayCommand _toggleLEDWoonkamer;

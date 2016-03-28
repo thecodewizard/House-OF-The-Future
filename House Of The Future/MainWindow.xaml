@@ -7,19 +7,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525"
         DataContext="{StaticResource mainvm}">
-    <Grid>
+    <Grid IsEnabled="{Binding ConnectionSuccess}">
         <!-- POSSIBILITY 1 -->
         <Grid DataContext="{StaticResource mainvm}" Panel.ZIndex="1">
             <!-- THE DATACONTEXT HERE POINTS TO THE VIEWMODEL DIRECTLY -->
             <!-- THIS GRID CAN CONTAIN ALL THE COMMANDS -->
-            
+
         </Grid>
         <Grid>
             <!-- THE DATACONTEXT HERE POINTS TO THE VIEWMODEL PROCCESSING LOGICAL LAYER -->
             <!-- THIS GRID CAN CONTAIN ALL THE STATUSSES -->
-            
+
         </Grid>
-        
+
         <!-- POSSIBILITY 2 -->
         <Grid>
             <CheckBox IsChecked="{Binding Core.IsLightWoonkamerOn}" Panel.ZIndex="5" />
