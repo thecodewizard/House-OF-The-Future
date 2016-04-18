@@ -39,18 +39,18 @@ namespace House_Of_The_Future.Shared.Models
         {
             Thread.Sleep(_WAITTIME);
 
-            //if (board2 != null && board2.isConnected()) Allowed = board2.StatusRedSwitch();
-            //else Allowed = new AdamBoard2().StatusRedSwitch();
+            if (board2 != null && board2.isConnected()) Allowed = board2.StatusRedSwitch();
+            else Allowed = new AdamBoard2().StatusRedSwitch();
 
-            //UpdateProperties();
+            UpdateProperties();
 
             if (Allowed)
             {
-                //DoWorkAlarm();
-                //DoWorkLight();
-                //DoWorkTempManagement();
-                //DoWorkGate();
-                //DoLockingWork();
+                DoWorkAlarm();
+                DoWorkLight();
+                DoWorkTempManagement();
+                DoWorkGate();
+                DoLockingWork();
             }
         }
 
