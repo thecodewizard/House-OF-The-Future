@@ -11,6 +11,7 @@ namespace House_Of_The_Future.Shared.DAL
 {
     public abstract class DAL
     {
+        public const int _waitTime = 100;
         public AdamSocket Socket { get; private set; }
 
         public void OpenConnection(String IP, int PORT)

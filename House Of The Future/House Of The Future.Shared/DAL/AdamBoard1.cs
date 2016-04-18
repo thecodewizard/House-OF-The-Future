@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace House_Of_The_Future.Shared.DAL
@@ -44,12 +45,14 @@ namespace House_Of_The_Future.Shared.DAL
         {
             if (!isConnected()) return;
             Socket.Modbus().ForceSingleCoil(00018, true);
+            Thread.Sleep(_waitTime);
             Console.WriteLine("Board 1 - ventilator turned on");
         }
         public void TurnOffVentilator()
         {
             if (!isConnected()) return;
             Socket.Modbus().ForceSingleCoil(00018, false);
+            Thread.Sleep(_waitTime);
             Console.WriteLine("Board 1 - ventilator turned off");
         }
         public bool StatusVentilator()
@@ -58,6 +61,7 @@ namespace House_Of_The_Future.Shared.DAL
 
             bool[] status = new bool[1];
             Socket.Modbus().ReadCoilStatus(00018, 1, out status);
+            Thread.Sleep(_waitTime);
             return status.First<bool>();
         }
         #endregion
@@ -67,12 +71,14 @@ namespace House_Of_The_Future.Shared.DAL
         {
             if(!isConnected()) return;
             Socket.Modbus().ForceSingleCoil(00017, true);
+            Thread.Sleep(_waitTime);
             Console.WriteLine("Board 1 - lamp turned on");
         }
         public void TurnOffLamp()
         {
             if (!isConnected()) return;
             Socket.Modbus().ForceSingleCoil(00017, false);
+            Thread.Sleep(_waitTime);
             Console.WriteLine("Board 1 - lamp turned off");
         }
         public bool StatusLamp()
@@ -81,6 +87,7 @@ namespace House_Of_The_Future.Shared.DAL
 
             bool[] status = new bool[1];
             Socket.Modbus().ReadCoilStatus(00017, 1, out status);
+            Thread.Sleep(_waitTime);
             return status.First<bool>();
         }
         #endregion
@@ -93,6 +100,7 @@ namespace House_Of_The_Future.Shared.DAL
             Adam4000_ChannelStatus[] boardStatus;
             float[] inputValues = new float[100];
             bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
+            Thread.Sleep(_waitTime);
             float statusPotentiometer = inputValues[5];
 
             if (statusPotentiometer < potentioTreshold) return TemperatureEnum.AIRCO;
@@ -106,6 +114,7 @@ namespace House_Of_The_Future.Shared.DAL
             Adam4000_ChannelStatus[] boardStatus;
             float[] inputValues = new float[100];
             bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
+            Thread.Sleep(_waitTime);
             float statusPotentiometer = inputValues[6];
 
             return statusPotentiometer;
@@ -115,6 +124,7 @@ namespace House_Of_The_Future.Shared.DAL
             Adam4000_ChannelStatus[] boardStatus;
             float[] inputValues = new float[100];
             bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
+            Thread.Sleep(_waitTime);
             float statusPotentiometer = inputValues[7];
 
             return statusPotentiometer;
@@ -124,6 +134,7 @@ namespace House_Of_The_Future.Shared.DAL
             Adam4000_ChannelStatus[] boardStatus;
             float[] inputValues = new float[100];
             bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
+            Thread.Sleep(_waitTime);
             float statusSwitch = inputValues[1];
 
             if (statusSwitch >= (potentioMaximum / 2)) return true;
@@ -134,6 +145,7 @@ namespace House_Of_The_Future.Shared.DAL
             Adam4000_ChannelStatus[] boardStatus;
             float[] inputValues = new float[100];
             bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
+            Thread.Sleep(_waitTime);
             float statusSwitch = inputValues[2];
 
             if (statusSwitch >= (potentioMaximum / 2)) return true;
@@ -144,6 +156,7 @@ namespace House_Of_The_Future.Shared.DAL
             Adam4000_ChannelStatus[] boardStatus;
             float[] inputValues = new float[100];
             bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
+            Thread.Sleep(_waitTime);
             float tempStatus = inputValues[3];
 
             return tempStatus; //Returns the status in Volt.
