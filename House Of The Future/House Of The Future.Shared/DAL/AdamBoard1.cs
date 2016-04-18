@@ -88,19 +88,23 @@ namespace House_Of_The_Future.Shared.DAL
         }
         public short StatusPotentiometer3()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return 0;
         }
         public bool StatusSwitch1()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return true;
         }
         public bool StatusSwitch2()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return true;
         }
         public double StatusTemperatureSensor()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return 0;
         }
         #endregion
 

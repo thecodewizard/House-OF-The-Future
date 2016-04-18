@@ -42,11 +42,11 @@ namespace House_Of_The_Future.Shared.Models
             //if (board2 != null && board2.isConnected()) Allowed = board2.StatusRedSwitch();
             //else Allowed = new AdamBoard2().StatusRedSwitch();
 
-            UpdateProperties();
+            //UpdateProperties();
 
             if (Allowed)
             {
-                DoWorkAlarm();
+                //DoWorkAlarm();
                 //DoWorkLight();
                 //DoWorkTempManagement();
                 //DoWorkGate();
@@ -451,7 +451,7 @@ namespace House_Of_The_Future.Shared.Models
             if (board1.StatusSwitch1())
             {
                 ProximityEnum proximity = board2.StatusProximity();
-                if (proximity == ProximityEnum.CLOSE || proximity == ProximityEnum.NEAR)
+                if (proximity == ProximityEnum.CLOSEST || proximity == ProximityEnum.CLOSE || proximity == ProximityEnum.NEAR)
                     TurnOnAlarm();
                 else TurnOffAlarm();
             }
