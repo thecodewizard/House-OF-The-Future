@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using House_Of_The_Future.Shared.Models;
+using System.Threading;
 
 namespace House_Of_The_Future.Shared.DAL
 {
@@ -45,17 +46,20 @@ namespace House_Of_The_Future.Shared.DAL
         {
             if (!isConnected()) return;
             Socket.Modbus().ForceSingleCoil(00018, true);
+            Thread.Sleep(_waitTime);
         }
         public void TurnOffLed1()
         {
             if (!isConnected()) return;
             Socket.Modbus().ForceSingleCoil(00018, false);
+            Thread.Sleep(_waitTime);
         }
         public bool StatusLed1()
         {
             if (!isConnected()) throw new NotConnectedException("Board 2 - Led1 is not connected.");
             bool[] status = new bool[1];
             Socket.Modbus().ReadCoilStatus(00018, 1, out status);
+            Thread.Sleep(_waitTime);
             return status.First<bool>();
         }
         #endregion
@@ -64,17 +68,20 @@ namespace House_Of_The_Future.Shared.DAL
         {
             if (!isConnected()) return;
             Socket.Modbus().ForceSingleCoil(00019, true);
+            Thread.Sleep(_waitTime);
         }
         public void TurnOffLed2()
         {
             if (!isConnected()) return;
             Socket.Modbus().ForceSingleCoil(00019, false);
+            Thread.Sleep(_waitTime);
         }
         public bool StatusLed2()
         {
             if (!isConnected()) throw new NotConnectedException("Board 2 - Led2 is not connected.");
             bool[] status = new bool[1];
             Socket.Modbus().ReadCoilStatus(00019, 1, out status);
+            Thread.Sleep(_waitTime);
             return status.First<bool>();
         }
         #endregion
@@ -83,17 +90,20 @@ namespace House_Of_The_Future.Shared.DAL
         {
             if (!isConnected()) return;
             Socket.Modbus().ForceSingleCoil(00020, true);
+            Thread.Sleep(_waitTime);
         }
         public void TurnOffLed3()
         {
             if (!isConnected()) return;
             Socket.Modbus().ForceSingleCoil(00020, false);
+            Thread.Sleep(_waitTime);
         }
         public bool StatusLed3()
         {
             if (!isConnected()) throw new NotConnectedException("Board 2 - Led3 is not connected.");
             bool[] status = new bool[1];
             Socket.Modbus().ReadCoilStatus(00020, 1, out status);
+            Thread.Sleep(_waitTime);
             return status.First<bool>();
         }
         #endregion
@@ -102,17 +112,20 @@ namespace House_Of_The_Future.Shared.DAL
         {
             if (!isConnected()) return;
             Socket.Modbus().ForceSingleCoil(00021, true);
+            Thread.Sleep(_waitTime);
         }
         public void TurnOffLed4()
         {
             if (!isConnected()) return;
             Socket.Modbus().ForceSingleCoil(00021, false);
+            Thread.Sleep(_waitTime);
         }
         public bool StatusLed4()
         {
             if (!isConnected()) throw new NotConnectedException("Board 2 - Led4 is not connected.");
             bool[] status = new bool[1];
             Socket.Modbus().ReadCoilStatus(00021, 1, out status);
+            Thread.Sleep(_waitTime);
             return status.First<bool>();
         }
         #endregion
@@ -123,17 +136,20 @@ namespace House_Of_The_Future.Shared.DAL
         {
             if (!isConnected()) return;
             Socket.Modbus().ForceSingleCoil(00017, true);
+            Thread.Sleep(_waitTime);
         }
         public void TurnOffVentilator()
         {
             if (!isConnected()) return;
             Socket.Modbus().ForceSingleCoil(00017, false);
+            Thread.Sleep(_waitTime);
         }
         public bool StatusVentilator()
         {
             if (!isConnected()) throw new NotConnectedException("Board 2 - ventilator is not connected.");
             bool[] status = new bool[1];
             Socket.Modbus().ReadCoilStatus(00017, 1, out status);
+            Thread.Sleep(_waitTime);
             return status.First<bool>();
         }
         #endregion
@@ -148,6 +164,7 @@ namespace House_Of_The_Future.Shared.DAL
 
             bool[] status = new bool[1];
             Socket.Modbus().ReadInputStatus(00001, 1, out status);
+            Thread.Sleep(_waitTime);
             return status[0];
         }
         public bool StatusGreenButton()
@@ -155,6 +172,7 @@ namespace House_Of_The_Future.Shared.DAL
             if (!isConnected()) throw new NotConnectedException("Board 2 - Green button is not connected.");
             bool[] status = new bool[1];
             Socket.Modbus().ReadInputStatus(00003, 1, out status);
+            Thread.Sleep(_waitTime);
             return status[0];
         }
         public bool StatusBlackButton()
@@ -162,6 +180,7 @@ namespace House_Of_The_Future.Shared.DAL
             if (!isConnected()) throw new NotConnectedException("Board 2 - Black button is not connected.");
             bool[] status = new bool[1];
             Socket.Modbus().ReadInputStatus(00004, 1, out status);
+            Thread.Sleep(_waitTime);
             return status[0];
         }
         public ProximityEnum StatusProximity()
@@ -169,6 +188,7 @@ namespace House_Of_The_Future.Shared.DAL
             if (!isConnected()) throw new NotConnectedException("Board 2 - Proximity sensor is not connected.");
             bool[] status = new bool[4];
             Socket.Modbus().ReadInputStatus(00005, 4, out status);
+            Thread.Sleep(_waitTime);
 
             if (status[3]) return ProximityEnum.CLOSEST;
             if (status[2]) return ProximityEnum.CLOSE;
