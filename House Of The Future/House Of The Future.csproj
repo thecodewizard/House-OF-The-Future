@@ -119,14 +119,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Content\lightbulb_off.png" />
+    <Resource Include="Content\lightbulb_on.jpg" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="House Of The Future.Shared\House Of The Future.Shared.csproj">
       <Project>{68cc3740-d901-4786-929d-444282d3038f}</Project>
       <Name>House Of The Future.Shared</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Content\lightbulb_off.png" />
-    <Resource Include="Content\lightbulb_on.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

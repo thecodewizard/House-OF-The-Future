@@ -451,7 +451,7 @@ namespace House_Of_The_Future.Shared.Models
             if (board1.StatusSwitch1())
             {
                 ProximityEnum proximity = board2.StatusProximity();
-                if (proximity == ProximityEnum.CLOSE || proximity == ProximityEnum.NEAR)
+                if (proximity == ProximityEnum.CLOSEST || proximity == ProximityEnum.CLOSE || proximity == ProximityEnum.NEAR)
                     TurnOnAlarm();
                 else TurnOffAlarm();
             }
