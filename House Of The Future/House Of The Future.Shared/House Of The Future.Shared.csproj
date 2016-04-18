@@ -31,10 +31,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Advantech.Adam">
-      <HintPath>..\..\..\benodigdheden\Adam.NET Utility\Program\Advantech.Adam.dll</HintPath>
+      <HintPath>..\..\..\..\..\Dropbox\2NMCT\S4 - Datacommunication\Project\Bronbestanden\adam_module\Adam.NET Utility\Program\Advantech.Adam.dll</HintPath>
     </Reference>
     <Reference Include="Advantech.Common">
-      <HintPath>..\..\..\benodigdheden\Adam.NET Utility\Program\Advantech.Common.dll</HintPath>
+      <HintPath>..\..\..\..\..\Dropbox\2NMCT\S4 - Datacommunication\Project\Bronbestanden\adam_module\Adam.NET Utility\Program\Advantech.Common.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
