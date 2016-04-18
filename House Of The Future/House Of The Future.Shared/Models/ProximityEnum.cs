@@ -8,6 +8,6 @@ namespace House_Of_The_Future.Shared.Models
 {
     public enum ProximityEnum
     {
-        DISTANT, FAR, NEAR, CLOSE
+        DISTANT, FAR, NEAR, CLOSE, CLOSEST
     }
 }

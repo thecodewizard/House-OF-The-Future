@@ -31,7 +31,8 @@ namespace House_Of_The_Future.Shared.DAL
         public AdamBoard2()
         {
             this.OpenConnection(IP, PORT);
-            //socket.Modbus().ForceSingleCoil(00017, false);
+            //StatusProximity();
+            //Socket.Modbus().ForceSingleCoil(00017, false);
             //socket.Modbus().ForceSingleCoil(00018, false);
             //socket.Modbus().ForceSingleCoil(00019, false);
             //socket.Modbus().ForceSingleCoil(00020, false);
@@ -42,57 +43,77 @@ namespace House_Of_The_Future.Shared.DAL
         #region led1
         public void TurnOnLed1()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) return;
+            Socket.Modbus().ForceSingleCoil(00018, true);
         }
         public void TurnOffLed1()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) return;
+            Socket.Modbus().ForceSingleCoil(00018, false);
         }
         public bool StatusLed1()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) throw new NotConnectedException("Board 2 - Led1 is not connected.");
+            bool[] status = new bool[1];
+            Socket.Modbus().ReadCoilStatus(00018, 1, out status);
+            return status.First<bool>();
         }
         #endregion
         #region led2
         public void TurnOnLed2()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) return;
+            Socket.Modbus().ForceSingleCoil(00019, true);
         }
         public void TurnOffLed2()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) return;
+            Socket.Modbus().ForceSingleCoil(00019, false);
         }
         public bool StatusLed2()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) throw new NotConnectedException("Board 2 - Led2 is not connected.");
+            bool[] status = new bool[1];
+            Socket.Modbus().ReadCoilStatus(00019, 1, out status);
+            return status.First<bool>();
         }
         #endregion
         #region led3
         public void TurnOnLed3()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) return;
+            Socket.Modbus().ForceSingleCoil(00020, true);
         }
         public void TurnOffLed3()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) return;
+            Socket.Modbus().ForceSingleCoil(00020, false);
         }
         public bool StatusLed3()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) throw new NotConnectedException("Board 2 - Led3 is not connected.");
+            bool[] status = new bool[1];
+            Socket.Modbus().ReadCoilStatus(00020, 1, out status);
+            return status.First<bool>();
         }
         #endregion
         #region led4
         public void TurnOnLed4()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) return;
+            Socket.Modbus().ForceSingleCoil(00021, true);
         }
         public void TurnOffLed4()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) return;
+            Socket.Modbus().ForceSingleCoil(00021, false);
         }
         public bool StatusLed4()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) throw new NotConnectedException("Board 2 - Led4 is not connected.");
+            bool[] status = new bool[1];
+            Socket.Modbus().ReadCoilStatus(00021, 1, out status);
+            return status.First<bool>();
         }
         #endregion
         #endregion
@@ -100,44 +121,65 @@ namespace House_Of_The_Future.Shared.DAL
         #region ventilator
         public void TurnOnVentilator()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) return;
+            Socket.Modbus().ForceSingleCoil(00017, true);
         }
         public void TurnOffVentilator()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) return;
+            Socket.Modbus().ForceSingleCoil(00017, false);
         }
         public bool StatusVentilator()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) throw new NotConnectedException("Board 2 - ventilator is not connected.");
+            bool[] status = new bool[1];
+            Socket.Modbus().ReadCoilStatus(00017, 1, out status);
+            return status.First<bool>();
         }
         #endregion
 
         #region inputs
         public bool StatusRedSwitch()
         {
-
-            //byte[] status = new byte[1];
-            //Socket.Modbus().ReadCoilStatus(00001, 1, out status);
-            //return status.First<byte>();
-
             //Board 1
             /* If red switch on -> return 3. If gb -> return 4. If bb -> return 8; ... */
-            throw new NotImplementedException();
+
+            if (!isConnected()) throw new NotConnectedException("Board 2 - Red switch is not connected.");
+
+            bool[] status = new bool[1];
+            Socket.Modbus().ReadInputStatus(00001, 1, out status);
+            return status[0];
         }
         public bool StatusGreenButton()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) throw new NotConnectedException("Board 2 - Green button is not connected.");
+            bool[] status = new bool[1];
+            Socket.Modbus().ReadInputStatus(00003, 1, out status);
+            return status[0];
         }
         public bool StatusBlackButton()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) throw new NotConnectedException("Board 2 - Black button is not connected.");
+            bool[] status = new bool[1];
+            Socket.Modbus().ReadInputStatus(00004, 1, out status);
+            return status[0];
         }
         public ProximityEnum StatusProximity()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) throw new NotConnectedException("Board 2 - Proximity sensor is not connected.");
+            bool[] status = new bool[4];
+            Socket.Modbus().ReadInputStatus(00005, 4, out status);
+
+            if (status[3]) return ProximityEnum.CLOSEST;
+            if (status[2]) return ProximityEnum.CLOSE;
+            if (status[1]) return ProximityEnum.NEAR;
+            if (status[0]) return ProximityEnum.FAR;
+            return ProximityEnum.DISTANT;
+
         }
         #endregion
 
         #endregion
+
     }
 }
