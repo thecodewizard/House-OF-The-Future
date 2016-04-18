@@ -112,7 +112,6 @@ namespace House_Of_The_Future.Shared.DAL
         }
         public float StatusPotentiometer3()
         {
-<<<<<<< HEAD
             Adam4000_ChannelStatus[] boardStatus;
             float[] inputValues = new float[100];
             bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
@@ -148,25 +147,6 @@ namespace House_Of_The_Future.Shared.DAL
             float tempStatus = inputValues[3];
 
             return tempStatus; //Returns the status in Volt.
-=======
-            //throw new NotImplementedException();
-            return 0;
-        }
-        public bool StatusSwitch1()
-        {
-            //throw new NotImplementedException();
-            return true;
-        }
-        public bool StatusSwitch2()
-        {
-            //throw new NotImplementedException();
-            return true;
-        }
-        public double StatusTemperatureSensor()
-        {
-            //throw new NotImplementedException();
-            return 0;
->>>>>>> origin/DAL-Layer-nico
         }
         #endregion
 
