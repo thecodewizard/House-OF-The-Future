@@ -147,7 +147,9 @@ namespace House_Of_The_Future.Shared.Models
 
         public void ToggleLightWoonkamer()
         {
-            if (board2.StatusLed1()) SetLightWoonkamer(board2, false);
+            if (board2.StatusLed1()) {
+                SetLightWoonkamer(board2, false);
+            }
             else SetLightWoonkamer(board2, true);
         }
 
@@ -175,16 +177,10 @@ namespace House_Of_The_Future.Shared.Models
 
         private void SetLightWoonkamer(AdamBoard2 board, bool status)
         {
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-
-                if (!Allowed) return;
-                bool lightOn = board.StatusLed1();
-                if (lightOn && !status) board.TurnOffLed1();
-                if (!lightOn && status) board.TurnOnLed1();
-
-            }).Start();
+            if (!Allowed) return;
+            bool lightOn = board.StatusLed1();
+            if (lightOn && !status) board.TurnOffLed1();
+            if (!lightOn && status) board.TurnOnLed1();
         }
 
         private void SetLightKeuken(AdamBoard2 board, bool status)
