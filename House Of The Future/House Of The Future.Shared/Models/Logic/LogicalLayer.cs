@@ -42,11 +42,11 @@ namespace House_Of_The_Future.Shared.Models
             //if (board2 != null && board2.isConnected()) Allowed = board2.StatusRedSwitch();
             //else Allowed = new AdamBoard2().StatusRedSwitch();
 
-            UpdateProperties();
+            //UpdateProperties();
 
             if (Allowed)
             {
-                DoWorkAlarm();
+                //DoWorkAlarm();
                 //DoWorkLight();
                 //DoWorkTempManagement();
                 //DoWorkGate();
@@ -574,7 +574,7 @@ namespace House_Of_The_Future.Shared.Models
 
     public class TargetTemperatureCalculator
     {
-        public static Double GetTemperature(short buttonInput)
+        public static Double GetTemperature(float buttonInput)
         {
             double targetTemp = (buttonInput / 255) * 20;
             return targetTemp;

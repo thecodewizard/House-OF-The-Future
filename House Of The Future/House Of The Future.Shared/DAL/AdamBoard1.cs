@@ -13,6 +13,8 @@ namespace House_Of_The_Future.Shared.DAL
     {
         public const String IP = "172.23.49.101";
         public const int PORT = 502;
+        public const double potentioTreshold = 1.812;
+        public const double potentioMaximum = 4.837;
 
         #region 172.23.49.101
 
@@ -20,10 +22,21 @@ namespace House_Of_The_Future.Shared.DAL
         /// Make a new Adamboard:
         /// 00017 - Lamp
         /// 00018 - Ventilator
+        /// 
+        /// FLOAT VALUES:
+        /// 0 -
+        /// 1 - Switch Naast Potentiometer
+        /// 2 - Switch Naast LED op box 
+        /// 3 - Temperatuur sensor (0 is warm, 4.837 is max) - 2 is lampwarm, 3 is ventilatorkoud
+        /// 4 -
+        /// 5 - Potentiometer Links (0 is min, 4.837 is max)
+        /// 6 - Potentiometer Center (0 is min, 4.837 is max)
+        /// 7 - Potentiometer Rechts (0 is min, 4.837 is max)
         /// </summary>
         public AdamBoard1()
         {
             this.OpenConnection(IP, PORT);
+            Console.WriteLine(StatusPotentiometer2().ToString());
         }
 
         #region ventilator1
@@ -75,32 +88,65 @@ namespace House_Of_The_Future.Shared.DAL
         #region inputs
         public TemperatureEnum StatusPotentiometer1()
         {
-            throw new NotImplementedException();
-        }
-        public short StatusPotentiometer2()
-        {
-            if (!isConnected()) throw new NotConnectedException("Potentiometer1 is not connected");
+            if (!isConnected()) throw new NotConnectedException("Board 1 - Potentiometer 1 is not connected");
 
-            //byte[] status = new byte[25];
-            //Socket.Modbus().ReadInputRegs(00003, 250, out status);
-            //return status.First<byte>();
-            throw new NotImplementedException();
+            Adam4000_ChannelStatus[] boardStatus;
+            float[] inputValues = new float[100];
+            bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
+            float statusPotentiometer = inputValues[5];
+
+            if (statusPotentiometer < potentioTreshold) return TemperatureEnum.AIRCO;
+            else if (statusPotentiometer > (potentioMaximum - potentioTreshold)) return TemperatureEnum.HEATING;
+            else return TemperatureEnum.NONE;
         }
-        public short StatusPotentiometer3()
+        public float StatusPotentiometer2()
         {
-            throw new NotImplementedException();
+            if (!isConnected()) throw new NotConnectedException("Board 1 - Potentiometer2 is not connected");
+
+            Adam4000_ChannelStatus[] boardStatus;
+            float[] inputValues = new float[100];
+            bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
+            float statusPotentiometer = inputValues[6];
+
+            return statusPotentiometer;
+        }
+        public float StatusPotentiometer3()
+        {
+            Adam4000_ChannelStatus[] boardStatus;
+            float[] inputValues = new float[100];
+            bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
+            float statusPotentiometer = inputValues[7];
+
+            return statusPotentiometer;
         }
         public bool StatusSwitch1()
         {
-            throw new NotImplementedException();
+            Adam4000_ChannelStatus[] boardStatus;
+            float[] inputValues = new float[100];
+            bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
+            float statusSwitch = inputValues[1];
+
+            if (statusSwitch >= (potentioMaximum / 2)) return true;
+            else return false;
         }
         public bool StatusSwitch2()
         {
-            throw new NotImplementedException();
+            Adam4000_ChannelStatus[] boardStatus;
+            float[] inputValues = new float[100];
+            bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
+            float statusSwitch = inputValues[2];
+
+            if (statusSwitch >= (potentioMaximum / 2)) return true;
+            else return false;
         }
         public double StatusTemperatureSensor()
         {
-            throw new NotImplementedException();
+            Adam4000_ChannelStatus[] boardStatus;
+            float[] inputValues = new float[100];
+            bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
+            float tempStatus = inputValues[3];
+
+            return tempStatus; //Returns the status in Volt.
         }
         #endregion
 
