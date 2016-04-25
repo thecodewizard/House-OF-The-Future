@@ -11,10 +11,27 @@ namespace House_Of_The_Future.Shared.Models
 {
     public class LogicalLayer : LLBaseClass
     {
+        private bool _async = false;
+
+        public bool Async
+        {
+            get
+            {
+                return _async;
+            }
+            set
+            {
+                if (_async == value) return;
+                _async = value;
+                OnPropertyChanged();
+            }
+        }
+ 
+
         private AdamBoard1 board1;
         private AdamBoard2 board2;
         private BackgroundWorker bgw;
-        private const int _WAITTIME = 100;
+        private const int _WAITTIME = 1000;
 
         public LogicalLayer()
         {
@@ -39,24 +56,43 @@ namespace House_Of_The_Future.Shared.Models
         {
             Thread.Sleep(_WAITTIME);
 
-            if (board2 != null && board2.isConnected()) Allowed = board2.StatusRedSwitch();
-            else Allowed = new AdamBoard2().StatusRedSwitch();
-
-            UpdateProperties();
-
-            if (Allowed)
+            if (Async)
             {
+                if (board2 != null && board2.isConnected()) Allowed = board2.StatusRedSwitch();
+                else Allowed = new AdamBoard2().StatusRedSwitch();
+
+                UpdateProperties();
                 DoWorkAlarm();
-                DoWorkLight();
-                DoWorkTempManagement();
-                DoWorkGate();
-                DoLockingWork();
+
+                if (Allowed)
+                {
+                    DoWorkLight();
+                    DoWorkTempManagement();
+                    DoWorkGate();
+                    DoLockingWork();
+                }
             }
+
         }
 
         private void Bgw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (!bgw.IsBusy) bgw.RunWorkerAsync();
+            if (!Async)
+            {
+                if (board2 != null && board2.isConnected()) Allowed = board2.StatusRedSwitch();
+                else Allowed = new AdamBoard2().StatusRedSwitch();
+
+                UpdateProperties();
+                DoWorkAlarm();
+                if (Allowed)
+                {
+                    DoWorkLight();
+                    DoWorkTempManagement();
+                    DoWorkGate();
+                    DoLockingWork();
+                }
+            }
         }
 
         private void UpdateProperties()
@@ -175,34 +211,46 @@ namespace House_Of_The_Future.Shared.Models
 
         private void SetLightWoonkamer(AdamBoard2 board, bool status)
         {
-            if (!Allowed) return;
-            bool lightOn = board.StatusLed1();
-            if (lightOn && !status) board.TurnOffLed1();
-            if (!lightOn && status) board.TurnOnLed1();
+            //if (!Allowed) return;
+            //bool lightOn = board.StatusLed1();
+            //if (lightOn && !status) board.TurnOffLed1();
+            //if (!lightOn && status) board.TurnOnLed1();
+
+            if (status) board.TurnOnLed1();
+            else board.TurnOffLed1(); 
         }
 
         private void SetLightKeuken(AdamBoard2 board, bool status)
         {
-            if (!Allowed) return;
-            bool lightOn = board.StatusLed2();
-            if (lightOn && !status) board.TurnOffLed2();
-            if (!lightOn && status) board.TurnOnLed2();
+            //if (!Allowed) return;
+            //bool lightOn = board.StatusLed2();
+            //if (lightOn && !status) board.TurnOffLed2();
+            //if (!lightOn && status) board.TurnOnLed2();
+
+            if (status) board.TurnOnLed2();
+            else board.TurnOffLed2();
         }
 
         private void SetLightSlaapkamer(AdamBoard2 board, bool status)
         {
-            if (!Allowed) return;
-            bool lightOn = board.StatusLed3();
-            if (lightOn && !status) board.TurnOffLed3();
-            if (!lightOn && status) board.TurnOnLed3();
+            //if (!Allowed) return;
+            //bool lightOn = board.StatusLed3();
+            //if (lightOn && !status) board.TurnOffLed3();
+            //if (!lightOn && status) board.TurnOnLed3();
+
+            if (status) board.TurnOnLed3();
+            else board.TurnOffLed3();
         }
 
         private void SetLightTuin(AdamBoard2 board, bool status)
         {
-            if (!Allowed) return;
-            bool lightOn = board.StatusLed4();
-            if (lightOn && !status) board.TurnOffLed4();
-            if (!lightOn && status) board.TurnOnLed4();
+            //if (!Allowed) return;
+            //bool lightOn = board.StatusLed4();
+            //if (lightOn && !status) board.TurnOffLed4();
+            //if (!lightOn && status) board.TurnOnLed4();
+
+            if (status) board.TurnOnLed4();
+            else board.TurnOffLed4();
         }
 
         #endregion
@@ -307,8 +355,10 @@ namespace House_Of_The_Future.Shared.Models
             if (IsAutoManaged)
             {
                 double targetTemp = TargetTemperatureCalculator.GetTemperature(board1.StatusPotentiometer2());
-                double currentTemp = board1.StatusTemperatureSensor();
+                double currentTemp = TargetTemperatureCalculator.GetTemperature(float.Parse((4.837 - board1.StatusTemperatureSensor()).ToString()));
                 double hysterese = 2.3;
+
+                Console.WriteLine("Target: " + targetTemp + " | Temperatuur: " + currentTemp);
 
                 //Determine full heating/airo with hysterese to save resources
                 if (currentTemp < (targetTemp - hysterese))
@@ -524,6 +574,7 @@ namespace House_Of_The_Future.Shared.Models
                 OnPropertyChanged();
             }
         }
+
         #endregion
 
         private void DoLockingWork()
@@ -540,7 +591,7 @@ namespace House_Of_The_Future.Shared.Models
     {
         public static Double GetTemperature(float buttonInput)
         {
-            double targetTemp = (buttonInput / 255) * 20;
+            double targetTemp = buttonInput * 18.6;
             return targetTemp;
         }
     }

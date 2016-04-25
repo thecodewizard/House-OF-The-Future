@@ -58,10 +58,12 @@ namespace House_Of_The_Future.Shared.DAL
         {
             if (!isConnected()) throw new NotConnectedException("Board 2 - Led1 is not connected.");
             bool[] status = new bool[1];
+
             Socket.Modbus().ReadCoilStatus(00018, 1, out status);
             Thread.Sleep(_waitTime);
 
             bool result;
+
             try
             {
                 result = status.First<bool>();

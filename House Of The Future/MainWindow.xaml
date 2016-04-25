@@ -51,9 +51,14 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="Doors">
-                    <Grid IsEnabled="{Binding Core.IsGuiUnlocked}" Background="#FFE5E5E5"/>
+                    <Grid IsEnabled="{Binding Core.IsGuiUnlocked}" Background="#FFE5E5E5">
+                        <StackPanel>
+                            <CheckBox IsEnabled="False" Content="Garagepoort" IsChecked="{Binding Core.IsGateOpen, Mode=OneWay}" />
+                        </StackPanel>
+                    </Grid>
                 </TabItem>
             </TabControl>
+            <CheckBox Visibility="{Binding Core.Allowed, Converter={StaticResource inverseBoolConverter} }" Content="Async" IsChecked="{Binding Core.Async}" Grid.Row="1" HorizontalAlignment="Right" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Margin="0,0,10,0"/>
         </Grid>
 
     </Grid>
