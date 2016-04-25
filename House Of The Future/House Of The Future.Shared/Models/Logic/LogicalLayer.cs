@@ -348,7 +348,7 @@ namespace House_Of_The_Future.Shared.Models
                         break;
                     case TemperatureEnum.NONE:
                         SetAirco(board2, false);
-                        SetHeating(board1, true);
+                        SetHeating(board1, false);
                         break;
                 }
             }
@@ -412,7 +412,7 @@ namespace House_Of_The_Future.Shared.Models
 
         private void DoWorkAlarm()
         {
-            if (board1.StatusSwitch1())
+            if (IsAlarmSet)
             {
                 ProximityEnum proximity = board2.StatusProximity();
                 if (proximity == ProximityEnum.CLOSEST || proximity == ProximityEnum.CLOSE || proximity == ProximityEnum.NEAR)

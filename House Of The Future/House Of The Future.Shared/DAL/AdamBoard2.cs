@@ -273,9 +273,9 @@ namespace House_Of_The_Future.Shared.DAL
             try
             {
                 if (status[3]) result = ProximityEnum.CLOSEST;
-                if (status[2]) result = ProximityEnum.CLOSE;
-                if (status[1]) result = ProximityEnum.NEAR;
-                if (status[0]) result = ProximityEnum.FAR;
+                else if (status[2]) result = ProximityEnum.CLOSE;
+                else if (status[1]) result = ProximityEnum.NEAR;
+                else if (status[0]) result = ProximityEnum.FAR;
                 else result = ProximityEnum.DISTANT;
             } catch
             {

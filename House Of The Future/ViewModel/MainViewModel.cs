@@ -31,6 +31,11 @@ namespace House_Of_The_Future.ViewModel
 
         GATE:
          - IsGateOpen
+         
+        SECURITY
+        - Allowed
+        - IsGUIUnlocked
+        - IsDoorunlocked
 
         VM COMMANDS TO BIND:
         LIGHTNING:

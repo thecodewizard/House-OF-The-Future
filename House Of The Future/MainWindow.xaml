@@ -9,7 +9,7 @@
         DataContext="{StaticResource mainvm}">
     <Grid IsEnabled="{Binding ConnectionSuccess}">
 
-        <Grid Grid.RowSpan="2">
+        <Grid IsEnabled="{Binding Core.Allowed}" Grid.RowSpan="2">
             <!--<CheckBox IsChecked="{Binding Core.IsLightWoonkamerOn}" Panel.ZIndex="5" />
             <Button Command="{Binding ToggleLEDWoonkamer}">
                 <Image Source="{Binding Core.IsLightWoonkamerOn, Converter={StaticResource lightImageConverter}}" />
@@ -21,10 +21,10 @@
             </Grid.RowDefinitions>
 
             <TextBlock x:Name="textBlock" Margin="10" Text="House of the Future" VerticalAlignment="Center" FontSize="21.333" HorizontalAlignment="Center"/>
-
-            <TabControl Grid.Row="1" x:Name="tabControl" >
+            <TextBlock Grid.Row="1" Text="Manual Override" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Foreground="Red" />
+            <TabControl Visibility="{Binding Core.Allowed, Converter={StaticResource inverseBoolConverter} }" Grid.Row="1" x:Name="tabControl" >
                 <TabItem Header="Lights">
-                    <Grid Background="#FFE5E5E5">
+                    <Grid IsEnabled="{Binding Core.IsGuiUnlocked}" Background="#FFE5E5E5">
                         <StackPanel>
                             <CheckBox x:Name="LightWoonKamer" Content="Woonkamer" IsChecked="{Binding Core.IsLightWoonkamerOn}" Command="{Binding CMDToggleLEDWoonkamer}" />
                             <CheckBox x:Name="LightKeuken" Content="Keuken" IsChecked="{Binding Core.IsLightKeukenOn}" Command="{Binding CMDToggleLEDKeuken}" />
@@ -34,16 +34,26 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="Temperature">
-                    <Grid Background="#FFE5E5E5"/>
+                    <Grid IsEnabled="{Binding Core.IsGuiUnlocked}" Background="#FFE5E5E5">
+                        <StackPanel>
+                            <CheckBox IsEnabled="False" Content="Automatische verwarming" IsChecked="{Binding Core.IsAutoManaged, Mode=OneWay}" />
+                            <CheckBox IsEnabled="False" Content="Airco" IsChecked="{Binding Core.IsAircoOn, Mode=OneWay}" />
+                            <CheckBox IsEnabled="False" Content="Verwarming" IsChecked="{Binding Core.IsHeatingOn, Mode=OneWay}" />
+                        </StackPanel>
+                    </Grid>
                 </TabItem>
                 <TabItem Header="Alarm">
-                    <Grid Background="#FFE5E5E5"/>
+                    <Grid IsEnabled="{Binding Core.IsGuiUnlocked}" Background="#FFE5E5E5">
+                        <StackPanel>
+                            <CheckBox IsEnabled="False" Content="Alarm" IsChecked="{Binding Core.IsAlarmSet, Mode=OneWay}" />
+                            <CheckBox IsEnabled="False" Content="Alarm Triggered" IsChecked="{Binding Core.IsAlarmOn, Mode=OneWay}" />
+                        </StackPanel>
+                    </Grid>
                 </TabItem>
                 <TabItem Header="Doors">
-                    <Grid Background="#FFE5E5E5"/>
+                    <Grid IsEnabled="{Binding Core.IsGuiUnlocked}" Background="#FFE5E5E5"/>
                 </TabItem>
             </TabControl>
-
         </Grid>
 
     </Grid>

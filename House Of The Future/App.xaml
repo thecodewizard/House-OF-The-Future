@@ -9,6 +9,7 @@
         <ResourceDictionary>
             <vm:MainViewModel x:Key="mainvm" x:Name="mainvm" />
             <helpers:LightImageConverter x:Key="lightImageConverter" x:Name="lightImageConverter" />
+            <helpers:InverseBoolConverter x:Key="inverseBoolConverter" x:Name="inverseBoolConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
