@@ -30,6 +30,7 @@ namespace House_Of_The_Future.Shared.Models
 
         private AdamBoard1 board1;
         private AdamBoard2 board2;
+        private CardReader cardReader;
         private BackgroundWorker bgw;
         private const int _WAITTIME = 1000;
 
@@ -37,6 +38,7 @@ namespace House_Of_The_Future.Shared.Models
         {
             board1 = new AdamBoard1();
             board2 = new AdamBoard2();
+            cardReader = new CardReader();
             SetUpBackgroundworker();
         }
 
