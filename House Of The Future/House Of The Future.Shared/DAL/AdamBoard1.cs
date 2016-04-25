@@ -37,7 +37,6 @@ namespace House_Of_The_Future.Shared.DAL
         public AdamBoard1()
         {
             this.OpenConnection(IP, PORT);
-            Console.WriteLine(StatusPotentiometer2().ToString());
         }
 
         #region ventilator1
