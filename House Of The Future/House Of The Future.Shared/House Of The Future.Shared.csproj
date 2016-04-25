@@ -50,6 +50,7 @@
     <Compile Include="DAL\AdamBoard2.cs" />
     <Compile Include="DAL\CardReader.cs" />
     <Compile Include="DAL\DAL.cs" />
+    <Compile Include="DAL\Helper\ModWinscard.cs" />
     <Compile Include="Models\Logic\LLBaseClass.cs" />
     <Compile Include="Models\Logic\LogicalLayer.cs" />
     <Compile Include="Models\NoSocketException.cs" />
