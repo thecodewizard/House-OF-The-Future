@@ -117,15 +117,22 @@ namespace House_Of_The_Future.Shared.DAL
         {
             if (!isConnected()) throw new NotConnectedException("Board 1 - Potentiometer 1 is not connected");
 
-            Adam4000_ChannelStatus[] boardStatus;
-            float[] inputValues = new float[100];
-            bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
-            Thread.Sleep(_waitTime);
-            float statusPotentiometer = inputValues[5];
+            try
+            {
 
-            if (statusPotentiometer < potentioTreshold) return TemperatureEnum.AIRCO;
-            else if (statusPotentiometer > (potentioMaximum - potentioTreshold)) return TemperatureEnum.HEATING;
-            else return TemperatureEnum.NONE;
+                Adam4000_ChannelStatus[] boardStatus;
+                float[] inputValues = new float[100];
+                bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
+                Thread.Sleep(_waitTime);
+                float statusPotentiometer = inputValues[5];
+
+                if (statusPotentiometer < potentioTreshold) return TemperatureEnum.AIRCO;
+                else if (statusPotentiometer > (potentioMaximum - potentioTreshold)) return TemperatureEnum.HEATING;
+                else return TemperatureEnum.NONE;
+            } catch
+            {
+                return TemperatureEnum.NONE;
+            }
         }
         public float StatusPotentiometer2()
         {
@@ -135,9 +142,16 @@ namespace House_Of_The_Future.Shared.DAL
             float[] inputValues = new float[100];
             bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
             Thread.Sleep(_waitTime);
-            float statusPotentiometer = inputValues[6];
 
-            return statusPotentiometer;
+            float result;
+            try
+            {
+                result = inputValues[6];
+            } catch
+            {
+                result = 0;
+            }
+            return result;
         }
         public float StatusPotentiometer3()
         {
@@ -145,31 +159,52 @@ namespace House_Of_The_Future.Shared.DAL
             float[] inputValues = new float[100];
             bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
             Thread.Sleep(_waitTime);
-            float statusPotentiometer = inputValues[7];
 
-            return statusPotentiometer;
+            float result;
+            try
+            {
+                result = inputValues[7];
+            }
+            catch
+            {
+                result = 0;
+            }
+            return result;
         }
         public bool StatusSwitch1()
         {
-            Adam4000_ChannelStatus[] boardStatus;
-            float[] inputValues = new float[100];
-            bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
-            Thread.Sleep(_waitTime);
-            float statusSwitch = inputValues[1];
+            try
+            {
+                Adam4000_ChannelStatus[] boardStatus;
+                float[] inputValues = new float[100];
+                bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
+                Thread.Sleep(_waitTime);
+                float statusSwitch = inputValues[1];
 
-            if (statusSwitch >= (potentioMaximum / 2)) return true;
-            else return false;
+                if (statusSwitch >= (potentioMaximum / 2)) return true;
+                else return false;
+            }
+            catch
+            {
+                return false;
+            }
         }
         public bool StatusSwitch2()
         {
-            Adam4000_ChannelStatus[] boardStatus;
-            float[] inputValues = new float[100];
-            bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
-            Thread.Sleep(_waitTime);
-            float statusSwitch = inputValues[2];
+            try
+            {
+                Adam4000_ChannelStatus[] boardStatus;
+                float[] inputValues = new float[100];
+                bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
+                Thread.Sleep(_waitTime);
+                float statusSwitch = inputValues[2];
 
-            if (statusSwitch >= (potentioMaximum / 2)) return true;
-            else return false;
+                if (statusSwitch >= (potentioMaximum / 2)) return true;
+                else return false;
+            } catch
+            {
+                return false;
+            }
         }
         public double StatusTemperatureSensor()
         {
@@ -177,9 +212,17 @@ namespace House_Of_The_Future.Shared.DAL
             float[] inputValues = new float[100];
             bool success = Socket.AnalogInput().GetValues(8, out inputValues, out boardStatus);
             Thread.Sleep(_waitTime);
-            float tempStatus = inputValues[3];
 
-            return tempStatus; //Returns the status in Volt.
+            float result;
+            try
+            {
+                result = inputValues[3];
+            }
+            catch
+            {
+                result = 0;
+            }
+            return result; //Return temperature in Volt
         }
         #endregion
 

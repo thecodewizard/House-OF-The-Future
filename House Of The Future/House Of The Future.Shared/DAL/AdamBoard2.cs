@@ -269,11 +269,19 @@ namespace House_Of_The_Future.Shared.DAL
             Socket.Modbus().ReadInputStatus(00005, 4, out status);
             Thread.Sleep(_waitTime);
 
-            if (status[3]) return ProximityEnum.CLOSEST;
-            if (status[2]) return ProximityEnum.CLOSE;
-            if (status[1]) return ProximityEnum.NEAR;
-            if (status[0]) return ProximityEnum.FAR;
-            return ProximityEnum.DISTANT;
+            ProximityEnum result;
+            try
+            {
+                if (status[3]) result = ProximityEnum.CLOSEST;
+                if (status[2]) result = ProximityEnum.CLOSE;
+                if (status[1]) result = ProximityEnum.NEAR;
+                if (status[0]) result = ProximityEnum.FAR;
+                else result = ProximityEnum.DISTANT;
+            } catch
+            {
+                result = ProximityEnum.DISTANT;
+            }
+            return result;
 
         }
         #endregion
