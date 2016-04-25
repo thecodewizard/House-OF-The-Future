@@ -21,7 +21,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock x:Name="textBlock" Margin="10" Text="House of the Future" VerticalAlignment="Center" FontSize="21.333" HorizontalAlignment="Center"/>
-            
+
             <TabControl Grid.Row="1" x:Name="tabControl" >
                 <TabItem Header="Lights">
                     <Grid Background="#FFE5E5E5">
@@ -45,6 +45,6 @@
             </TabControl>
 
         </Grid>
-        
+
     </Grid>
 </Window>
