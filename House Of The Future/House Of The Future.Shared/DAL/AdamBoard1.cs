@@ -62,7 +62,17 @@ namespace House_Of_The_Future.Shared.DAL
             bool[] status = new bool[1];
             Socket.Modbus().ReadCoilStatus(00018, 1, out status);
             Thread.Sleep(_waitTime);
-            return status.First<bool>();
+
+            bool result;
+            try
+            {
+                result = status.First<bool>();
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
         }
         #endregion
 
@@ -88,7 +98,17 @@ namespace House_Of_The_Future.Shared.DAL
             bool[] status = new bool[1];
             Socket.Modbus().ReadCoilStatus(00017, 1, out status);
             Thread.Sleep(_waitTime);
-            return status.First<bool>();
+
+            bool result;
+            try
+            {
+                result = status.First<bool>();
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
         }
         #endregion
 

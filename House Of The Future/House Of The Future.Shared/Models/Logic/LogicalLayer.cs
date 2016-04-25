@@ -79,7 +79,7 @@ namespace House_Of_The_Future.Shared.Models
         }
         #endregion
 
-        #region Lighting - Threaded
+        #region Lighting
 
         #region Properties
 
@@ -175,58 +175,34 @@ namespace House_Of_The_Future.Shared.Models
 
         private void SetLightWoonkamer(AdamBoard2 board, bool status)
         {
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-
-                if (!Allowed) return;
-                bool lightOn = board.StatusLed1();
-                if (lightOn && !status) board.TurnOffLed1();
-                if (!lightOn && status) board.TurnOnLed1();
-
-            }).Start();
+            if (!Allowed) return;
+            bool lightOn = board.StatusLed1();
+            if (lightOn && !status) board.TurnOffLed1();
+            if (!lightOn && status) board.TurnOnLed1();
         }
 
         private void SetLightKeuken(AdamBoard2 board, bool status)
         {
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-
-                if (!Allowed) return;
-                bool lightOn = board.StatusLed2();
-                if (lightOn && !status) board.TurnOffLed2();
-                if (!lightOn && status) board.TurnOnLed2();
-
-            }).Start();
+            if (!Allowed) return;
+            bool lightOn = board.StatusLed2();
+            if (lightOn && !status) board.TurnOffLed2();
+            if (!lightOn && status) board.TurnOnLed2();
         }
 
         private void SetLightSlaapkamer(AdamBoard2 board, bool status)
         {
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-
-                if (!Allowed) return;
-                bool lightOn = board.StatusLed3();
-                if (lightOn && !status) board.TurnOffLed3();
-                if (!lightOn && status) board.TurnOnLed3();
-
-            }).Start();
+            if (!Allowed) return;
+            bool lightOn = board.StatusLed3();
+            if (lightOn && !status) board.TurnOffLed3();
+            if (!lightOn && status) board.TurnOnLed3();
         }
 
         private void SetLightTuin(AdamBoard2 board, bool status)
         {
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-
-                if (!Allowed) return;
-                bool lightOn = board.StatusLed4();
-                if (lightOn && !status) board.TurnOffLed4();
-                if (!lightOn && status) board.TurnOnLed4();
-
-            }).Start();
+            if (!Allowed) return;
+            bool lightOn = board.StatusLed4();
+            if (lightOn && !status) board.TurnOffLed4();
+            if (!lightOn && status) board.TurnOnLed4();
         }
 
         #endregion
@@ -254,7 +230,7 @@ namespace House_Of_The_Future.Shared.Models
 
         #endregion
 
-        #region Temperature Management - Threaded
+        #region Temperature Management
 
         #region Properties
 
@@ -311,30 +287,18 @@ namespace House_Of_The_Future.Shared.Models
         #region Private methods
         private void SetAirco(AdamBoard2 board, bool status)
         {
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-
-                if (!Allowed) return;
-                bool ventOn = board.StatusVentilator();
-                if (ventOn && !status) board.TurnOffVentilator();
-                if (!ventOn && status) board.TurnOnVentilator();
-
-            }).Start();
+            if (!Allowed) return;
+            bool ventOn = board.StatusVentilator();
+            if (ventOn && !status) board.TurnOffVentilator();
+            if (!ventOn && status) board.TurnOnVentilator();
         }
 
         private void SetHeating(AdamBoard1 board, bool status)
         {
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-
-                if (!Allowed) return;
-                bool ventOn = board.StatusVentilator();
-                if (ventOn && !status) board.TurnOffVentilator();
-                if (!ventOn && status) board.TurnOnVentilator();
-
-            }).Start();
+            if (!Allowed) return;
+            bool ventOn = board.StatusVentilator();
+            if (ventOn && !status) board.TurnOffVentilator();
+            if (!ventOn && status) board.TurnOnVentilator();
         }
         #endregion
 

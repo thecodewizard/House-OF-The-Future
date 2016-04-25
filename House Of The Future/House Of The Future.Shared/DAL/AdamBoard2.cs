@@ -60,7 +60,16 @@ namespace House_Of_The_Future.Shared.DAL
             bool[] status = new bool[1];
             Socket.Modbus().ReadCoilStatus(00018, 1, out status);
             Thread.Sleep(_waitTime);
-            return status.First<bool>();
+
+            bool result;
+            try
+            {
+                result = status.First<bool>();
+            } catch
+            {
+                result = false;
+            }
+            return result;
         }
         #endregion
         #region led2
@@ -82,7 +91,17 @@ namespace House_Of_The_Future.Shared.DAL
             bool[] status = new bool[1];
             Socket.Modbus().ReadCoilStatus(00019, 1, out status);
             Thread.Sleep(_waitTime);
-            return status.First<bool>();
+
+            bool result;
+            try
+            {
+                result = status.First<bool>();
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
         }
         #endregion
         #region led3
@@ -104,7 +123,17 @@ namespace House_Of_The_Future.Shared.DAL
             bool[] status = new bool[1];
             Socket.Modbus().ReadCoilStatus(00020, 1, out status);
             Thread.Sleep(_waitTime);
-            return status.First<bool>();
+
+            bool result;
+            try
+            {
+                result = status.First<bool>();
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
         }
         #endregion
         #region led4
@@ -126,7 +155,17 @@ namespace House_Of_The_Future.Shared.DAL
             bool[] status = new bool[1];
             Socket.Modbus().ReadCoilStatus(00021, 1, out status);
             Thread.Sleep(_waitTime);
-            return status.First<bool>();
+
+            bool result;
+            try
+            {
+                result = status.First<bool>();
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
         }
         #endregion
         #endregion
@@ -150,7 +189,17 @@ namespace House_Of_The_Future.Shared.DAL
             bool[] status = new bool[1];
             Socket.Modbus().ReadCoilStatus(00017, 1, out status);
             Thread.Sleep(_waitTime);
-            return status.First<bool>();
+
+            bool result;
+            try
+            {
+                result = status.First<bool>();
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
         }
         #endregion
 
@@ -165,7 +214,17 @@ namespace House_Of_The_Future.Shared.DAL
             bool[] status = new bool[1];
             Socket.Modbus().ReadInputStatus(00001, 1, out status);
             Thread.Sleep(_waitTime);
-            return status[0];
+
+            bool result;
+            try
+            {
+                result = status.First<bool>();
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
         }
         public bool StatusGreenButton()
         {
@@ -173,7 +232,17 @@ namespace House_Of_The_Future.Shared.DAL
             bool[] status = new bool[1];
             Socket.Modbus().ReadInputStatus(00003, 1, out status);
             Thread.Sleep(_waitTime);
-            return status[0];
+
+            bool result;
+            try
+            {
+                result = status.First<bool>();
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
         }
         public bool StatusBlackButton()
         {
@@ -181,7 +250,17 @@ namespace House_Of_The_Future.Shared.DAL
             bool[] status = new bool[1];
             Socket.Modbus().ReadInputStatus(00004, 1, out status);
             Thread.Sleep(_waitTime);
-            return status[0];
+
+            bool result;
+            try
+            {
+                result = status.First<bool>();
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
         }
         public ProximityEnum StatusProximity()
         {
