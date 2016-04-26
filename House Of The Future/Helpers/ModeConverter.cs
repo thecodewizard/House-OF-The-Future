@@ -8,13 +8,13 @@ using System.Windows.Data;
 
 namespace House_Of_The_Future.Helpers
 {
-    public class LightImageConverter : IValueConverter
+    public class ModeConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool lightStatus = (bool)value;
-            String imagePath = (lightStatus) ? "Images/LampAan.png" : "Images/LampUit.png";
-            return imagePath as String;
+            bool Automanaged = (bool)value;
+            String Message = (Automanaged) ? "Automatic Mode" : "Manual Mode";
+            return Message as String;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

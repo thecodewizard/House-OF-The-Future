@@ -10,6 +10,9 @@
             <vm:MainViewModel x:Key="mainvm" x:Name="mainvm" />
             <helpers:LightImageConverter x:Key="lightImageConverter" x:Name="lightImageConverter" />
             <helpers:InverseBoolConverter x:Key="inverseBoolConverter" x:Name="inverseBoolConverter" />
+            <helpers:BoolConverter x:Key="boolConverter" x:Name="boolConverter" />
+            <helpers:ModeConverter x:Key="modeConverter" x:Name="modeConverter" />
+            <helpers:PoortConverter x:Key="poortConverter" x:Name="poortConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

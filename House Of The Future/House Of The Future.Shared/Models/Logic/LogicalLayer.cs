@@ -11,7 +11,17 @@ namespace House_Of_The_Future.Shared.Models
 {
     public class LogicalLayer : LLBaseClass
     {
-        private bool _async = false;
+
+        #region Calcutated Properties
+
+        public bool TempOk { get { return (!IsAircoOn && !IsHeatingOn); } }
+        public bool AlarmDisabled { get { return (!IsAlarmOn && !IsAlarmSet); } }
+        public bool  AlarmSet{ get { return (!IsAlarmOn && IsAlarmSet); } }
+
+        #endregion
+
+
+        private bool _async = true;
 
         public bool Async
         {
@@ -310,6 +320,7 @@ namespace House_Of_The_Future.Shared.Models
                 if (_isHeatingOn == value) return;
                 _isHeatingOn = value;
                 OnPropertyChanged();
+                OnPropertyChanged("TempOk");
             }
         }
         public bool IsAircoOn
@@ -320,6 +331,7 @@ namespace House_Of_The_Future.Shared.Models
                 if (_isAircoOn == value) return;
                 _isAircoOn = value;
                 OnPropertyChanged();
+                OnPropertyChanged("TempOk");
             }
         }
         public double TargetTemperature
@@ -422,6 +434,8 @@ namespace House_Of_The_Future.Shared.Models
                 if (_isAlarmOn == value) return;
                 _isAlarmOn = value;
                 OnPropertyChanged();
+                OnPropertyChanged("AlarmDisabled");
+                OnPropertyChanged("AlarmSet");
             }
         }
 
@@ -434,6 +448,8 @@ namespace House_Of_The_Future.Shared.Models
                 if (_isAlarmSet == value) return;
                 _isAlarmSet = value;
                 OnPropertyChanged();
+                OnPropertyChanged("AlarmDisabled");
+                OnPropertyChanged("AlarmSet");
             }
         }
 

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:House_Of_The_Future"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525"
+        Title="House of the Future" Height="500" Width="800"
         DataContext="{StaticResource mainvm}">
     <Grid IsEnabled="{Binding ConnectionSuccess}">
 
@@ -16,25 +16,62 @@
             </Button>-->
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <TextBlock x:Name="textBlock" Margin="10" Text="House of the Future" VerticalAlignment="Center" FontSize="21.333" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Row="1" Text="Manual Override" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Foreground="Red" />
-            <TabControl Visibility="{Binding Core.Allowed, Converter={StaticResource inverseBoolConverter} }" Grid.Row="1" x:Name="tabControl" >
+            <TextBlock x:Name="textBlock" Margin="10" Text="House of the Future" VerticalAlignment="Center" FontSize="32" HorizontalAlignment="Center" FontFamily="Tekton Pro Ext"/>
+            <Image Height="100" Source="Images/banner.png" StretchDirection="UpOnly" />
+
+            <TextBlock Grid.Row="1" Text="Manual Override" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36" Foreground="Red" FontFamily="Ubuntu Light"/>
+            <TabControl Visibility="{Binding Core.Allowed, Converter={StaticResource inverseBoolConverter} }" Grid.Row="1" x:Name="tabControl" Margin="0,-20,0,0" >
+                <!--Visibility="{Binding Core.Allowed, Converter={StaticResource inverseBoolConverter} }"-->
                 <TabItem Header="Lights">
                     <Grid IsEnabled="{Binding Core.IsGuiUnlocked}" Background="#FFE5E5E5">
-                        <StackPanel>
-                            <CheckBox x:Name="LightWoonKamer" Content="Woonkamer" IsChecked="{Binding Core.IsLightWoonkamerOn}" Command="{Binding CMDToggleLEDWoonkamer}" />
-                            <CheckBox x:Name="LightKeuken" Content="Keuken" IsChecked="{Binding Core.IsLightKeukenOn}" Command="{Binding CMDToggleLEDKeuken}" />
-                            <CheckBox x:Name="LightSlaapkamer" Content="Slaapkamer" IsChecked="{Binding Core.IsLightSlaapkamerOn}" Command="{Binding CMDToggleLEDSlaapkamer}" />
-                            <CheckBox x:Name="LightTuin" Content="Tuin" IsChecked="{Binding Core.IsLightTuinOn}" Command="{Binding CMDToggleLEDTuin}" />
-                        </StackPanel>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Button Background="Transparent" BorderBrush="Transparent" Grid.Column="0" Command="{Binding CMDToggleLEDWoonkamer}">
+                            <Image Width="150" Source="{Binding Core.IsLightWoonkamerOn, Converter={StaticResource lightImageConverter}}" />
+                        </Button>
+                        <Button Background="Transparent" BorderBrush="Transparent" Grid.Column="1" Command="{Binding CMDToggleLEDKeuken}">
+                            <Image Width="150" Source="{Binding Core.IsLightKeukenOn, Converter={StaticResource lightImageConverter}}" />
+                        </Button>
+                        <Button Background="Transparent" BorderBrush="Transparent" Grid.Column="2" Command="{Binding CMDToggleLEDSlaapkamer}">
+                            <Image Width="150" Source="{Binding Core.IsLightSlaapkamerOn, Converter={StaticResource lightImageConverter}}" />
+                        </Button>
+                        <Button Background="Transparent" BorderBrush="Transparent" Grid.Column="3" Command="{Binding CMDToggleLEDTuin}">
+                            <Image Width="150" Source="{Binding Core.IsLightTuinOn, Converter={StaticResource lightImageConverter}}" />
+                        </Button>
+
+                        <TextBlock Text="Woonkamer" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontFamily="Ubuntu Light" />
+                        <TextBlock Text="Keuken" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontFamily="Ubuntu Light" />
+                        <TextBlock Text="Slaapkamer" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontFamily="Ubuntu Light" />
+                        <TextBlock Text="Tuin" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" FontFamily="Ubuntu Light" />
+
+                        <CheckBox Grid.Column="0" x:Name="LightWoonKamer" Content="Woonkamer" IsChecked="{Binding Core.IsLightWoonkamerOn}" Command="{Binding CMDToggleLEDWoonkamer}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <CheckBox Grid.Column="1" x:Name="LightKeuken" Content="Keuken" IsChecked="{Binding Core.IsLightKeukenOn}" Command="{Binding CMDToggleLEDKeuken}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <CheckBox Grid.Column="2" x:Name="LightSlaapkamer" Content="Slaapkamer" IsChecked="{Binding Core.IsLightSlaapkamerOn}" Command="{Binding CMDToggleLEDSlaapkamer}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        <CheckBox Grid.Column="3" x:Name="LightTuin" Content="Tuin" IsChecked="{Binding Core.IsLightTuinOn}" Command="{Binding CMDToggleLEDTuin}" HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Grid>
                 </TabItem>
                 <TabItem Header="Temperature">
                     <Grid IsEnabled="{Binding Core.IsGuiUnlocked}" Background="#FFE5E5E5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="275"/>
+                            <RowDefinition Height="1*"/>
+                        </Grid.RowDefinitions>
+                        <Image Height="250" Source="Images/Verwarming.png" Visibility="{Binding Core.IsHeatingOn, Converter={StaticResource boolConverter} }"/>
+                        <Image Height="250" Source="Images/Airco.png" Visibility="{Binding Core.IsAircoOn, Converter={StaticResource boolConverter} }"/>
+                        <Image Height="250" Source="Images/geentemp.png" Visibility="{Binding Core.TempOk, Converter={StaticResource boolConverter} }"/>
+                        <TextBlock Grid.Row="1" Text="{Binding Core.IsAutoManaged, Converter={StaticResource modeConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="32" FontFamily="Ubuntu Light"/>
                         <StackPanel>
                             <CheckBox IsEnabled="False" Content="Automatische verwarming" IsChecked="{Binding Core.IsAutoManaged, Mode=OneWay}" />
                             <CheckBox IsEnabled="False" Content="Airco" IsChecked="{Binding Core.IsAircoOn, Mode=OneWay}" />
@@ -44,7 +81,10 @@
                 </TabItem>
                 <TabItem Header="Alarm">
                     <Grid IsEnabled="{Binding Core.IsGuiUnlocked}" Background="#FFE5E5E5">
-                        <StackPanel>
+                        <Image Height="250" Source="Images/AlarmDisabled.png" Visibility="{Binding Core.AlarmDisabled, Converter={StaticResource boolConverter} }"/>
+                        <Image Height="250" Source="Images/AlarmSet.png" Visibility="{Binding Core.AlarmSet, Converter={StaticResource boolConverter} }"/>
+                        <Image Height="250" Source="Images/AlarmTriggered.png" Visibility="{Binding Core.IsAlarmOn, Converter={StaticResource boolConverter} }"/>
+                        <StackPanel>    
                             <CheckBox IsEnabled="False" Content="Alarm" IsChecked="{Binding Core.IsAlarmSet, Mode=OneWay}" />
                             <CheckBox IsEnabled="False" Content="Alarm Triggered" IsChecked="{Binding Core.IsAlarmOn, Mode=OneWay}" />
                         </StackPanel>
@@ -52,13 +92,14 @@
                 </TabItem>
                 <TabItem Header="Doors">
                     <Grid IsEnabled="{Binding Core.IsGuiUnlocked}" Background="#FFE5E5E5">
+                        <Image Width="500" Margin="10" Source="{Binding Core.IsGateOpen, Converter={StaticResource poortConverter}}"/>
                         <StackPanel>
                             <CheckBox IsEnabled="False" Content="Garagepoort" IsChecked="{Binding Core.IsGateOpen, Mode=OneWay}" />
                         </StackPanel>
                     </Grid>
                 </TabItem>
             </TabControl>
-            <CheckBox Visibility="{Binding Core.Allowed, Converter={StaticResource inverseBoolConverter} }" Content="Async" IsChecked="{Binding Core.Async}" Grid.Row="1" HorizontalAlignment="Right" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Margin="0,0,10,0"/>
+            <CheckBox Visibility="{Binding Core.Allowed, Converter={StaticResource inverseBoolConverter} }" Content="Async" IsChecked="{Binding Core.Async}" Grid.Row="1" HorizontalAlignment="Right" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Margin="0,-20,10,0"/>
         </Grid>
 
     </Grid>
