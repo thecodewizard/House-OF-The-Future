@@ -4,17 +4,17 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace House_Of_The_Future.Helpers
 {
-    public class LightImageConverter : IValueConverter
+    public class BoolConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool lightStatus = (bool)value;
-            String imagePath = (lightStatus) ? "Images/LampAan.png" : "Images/LampUit.png";
-            return imagePath as String;
+            return (lightStatus) ? (Visibility)Visibility.Visible : (Visibility)Visibility.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

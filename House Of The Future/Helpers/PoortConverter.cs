@@ -8,12 +8,12 @@ using System.Windows.Data;
 
 namespace House_Of_The_Future.Helpers
 {
-    public class LightImageConverter : IValueConverter
+    public class PoortConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool lightStatus = (bool)value;
-            String imagePath = (lightStatus) ? "Images/LampAan.png" : "Images/LampUit.png";
+            bool poortStatus = (bool)value;
+            String imagePath = (poortStatus) ? "Images/GarageOpen.png" : "Images/GarageDicht.png";
             return imagePath as String;
         }
 

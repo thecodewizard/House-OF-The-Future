@@ -75,8 +75,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\BoolConverter.cs" />
+    <Compile Include="Helpers\PoortConverter.cs" />
     <Compile Include="Helpers\InverseBoolConverter.cs" />
     <Compile Include="Helpers\LightImageConverter.cs" />
+    <Compile Include="Helpers\ModeConverter.cs" />
+    <Compile Include="Helpers\VerwarmingConverter.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -130,6 +134,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Airco.png" />
+    <Resource Include="Images\AlarmDisabled.png" />
+    <Resource Include="Images\AlarmSet.png" />
+    <Resource Include="Images\AlarmTriggered.png" />
+    <Resource Include="Images\banner.png" />
+    <Resource Include="Images\GarageDicht.png" />
+    <Resource Include="Images\GarageOpen.png" />
+    <Resource Include="Images\LampAan.png" />
+    <Resource Include="Images\LampUit.png" />
+    <Resource Include="Images\Verwarming.png" />
+    <Resource Include="Images\geentemp.png" />
     <Content Include="music\KRS One Sound of Da Police ‌‌ - Bohemia After Dark.mp3" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
