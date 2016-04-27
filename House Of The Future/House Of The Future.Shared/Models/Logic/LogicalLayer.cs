@@ -105,6 +105,7 @@ namespace House_Of_The_Future.Shared.Models
                     DoLockingWork();
                 }
             }
+            Console.WriteLine("Einde lus");
         }
 
         private void UpdateProperties()
@@ -370,7 +371,7 @@ namespace House_Of_The_Future.Shared.Models
             {
                 double targetTemp = TargetTemperatureCalculator.GetTemperature(board1.StatusPotentiometer2());
                 double currentTemp = TargetTemperatureCalculator.GetTemperature(float.Parse((4.837 - board1.StatusTemperatureSensor()).ToString()));
-                double hysterese = 2.3;
+                double hysterese = 3.5; //2.3
 
                 Console.WriteLine("Target: " + targetTemp + " | Temperatuur: " + currentTemp);
 
